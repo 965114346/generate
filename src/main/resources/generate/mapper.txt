@@ -1,0 +1,7 @@
+package {daoPackageName};
+
+import {beanPackageName}.{beanName};
+
+public interface {daoName} extends BaseMapper<{beanName}, Long> {
+
+}

@@ -1,0 +1,12 @@
+package {beanPackageName};
+
+import lombok.Data;
+{import}
+/**
+ * {beanName}
+ */
+@Data
+public class {beanName} {
+
+{filelds}
+}

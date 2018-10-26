@@ -1,0 +1,83 @@
+package {serviceImplPackageName};
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import {beanPackageName}.{beanName};
+import {beanPackageName}.PageBean;
+import {beanPackageName}.PageResult;
+import {beanPackageName}.Result;
+import {daoPackageName}.{daoName};
+import {servicePackageName}.{serviceName};
+import lombok.AllArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
+public class {serviceImplName} implements {serviceName} {
+
+    private {daoName} {dao};
+
+    @Override
+    public PageResult<{beanName}> findAll({beanName} {bean}) {
+        List<{beanName}> {bean}List = {dao}.findAll({bean});
+        return new PageResult<>((long){bean}List.size(), {bean}List);
+    }
+
+    @Override
+    public PageResult<{beanName}> findAll(PageBean pageBean, {beanName} {bean}) {
+        PageHelper.startPage(pageBean.getPageNumber(), pageBean.getPageSize());
+        List<{beanName}> {bean}List = {dao}.findAll({bean});
+        PageInfo<{beanName}> pageInfo = new PageInfo<>({bean}List);
+        return new PageResult<>(pageInfo.getTotal(), {bean}List);
+    }
+
+    @Override
+    public {beanName} findById(Long id) {
+        return {dao}.findById(id);
+    }
+
+    @Override
+    public long count({beanName} {bean}) {
+        return {dao}.count({bean});
+    }
+
+    @Transactional
+    @Override
+    public Result update({beanName} {bean}) {
+    	{dao}.update({bean});
+        return Result.success();
+    }
+
+    @Transactional
+    @Override
+    public Result save({beanName} {bean}) {
+        {dao}.save({bean});
+        return Result.success();
+    }
+
+    @Transactional
+    @Override
+    public Result deleteById(Long id) {
+        {dao}.deleteById(id);
+        return Result.success();
+    }
+
+    @Transactional
+    @Override
+    public Result delete({beanName} {bean}) {
+        {dao}.delete({bean});
+        return Result.success();
+    }
+
+    @Transactional
+    @Override
+    public Result delete() {
+        {dao}.delete();
+        return Result.success();
+    }
+}

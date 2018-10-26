@@ -1,0 +1,36 @@
+package {beanPackageName};
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class PageBean {
+
+    /**
+     * 页码	默认第1页
+     */
+    private Integer pageNumber = 1;
+    
+    /**
+     * 每页显示条数	默认10条
+     */
+    private Integer pageSize = 10;
+    
+    /**
+     * 排序列名
+     */
+    private String sortName;
+    
+    /**
+     * 排序方式asc desc
+     */
+    private String sortOrder;
+    
+    /**
+     * 搜索文本
+     */
+    private String searchText;
+}

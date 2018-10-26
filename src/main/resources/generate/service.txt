@@ -1,0 +1,7 @@
+package {servicePackageName};
+
+import {beanPackageName}.{beanName};
+
+public interface {serviceName} extends BaseService<{beanName}, Long> {
+
+}

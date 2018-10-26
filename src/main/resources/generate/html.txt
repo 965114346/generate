@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css" />
+</head>
+
+<body style="margin-top: 70px;">
+    <div id="el" class="container">
+
+        <div class="panel panel-default">
+
+            <div id="toolbar">
+                <!--<button class="btn btn-danger">删除</button>-->
+                <button class="btn btn-success" @click="modal()">添加</button>
+            </div>
+
+            <div class="panel-body">
+                <table id="table"></table>
+            </div>
+        </div>
+
+        <div id="modal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">添加</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form" class="form-horizontal">
+{modal}
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" @click="save()">保存</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.17/vue.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdn.bootcss.com/jquery.serializeJSON/2.9.0/jquery.serializejson.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: '#el',
+            data: {},
+            methods: {
+                modal: function() {
+                    $('#modal').modal('show');
+                },
+                save: function() {
+                    console.log(JSON.stringify($("#form").serializeJSON()));
+                    this.$http.post('/{beanParamName}s', JSON.stringify($("#form").serializeJSON()), {
+                        emulateJSON: false
+                    }).then(function(value) {
+                        console.log(value.data);
+                        if (value.data.success) {
+                            $('#modal').modal('hide');
+                            $('#table').bootstrapTable('refresh');
+                        }
+                    });
+                },
+                delete: function(id) {
+                    console.log(JSON.stringify($("#form").serializeJSON()));
+                    this.$http.delete('/{beanParamName}s/' + id).then(function(value) {
+                        console.log(value.data);
+                        if (value.data.success) {
+                            $('#table').bootstrapTable('refresh');
+                        }
+                    });
+                }
+            }
+        });
+
+        $(function() {
+            //bootstrap table分页
+            $('#table').bootstrapTable({
+                url: '/{beanParamName}s',
+                method: 'GET',
+                pagination: true, //显示分页
+                striped: true, //隔行变色
+                showToggle: true, //是否显示  切换视图（table/card）按钮
+                showColumns: true, //是否显示 内容列下拉框
+                pageNumber: 1, //如果设置了分页，首页页码,默认为1
+                pageSize: 10, //如果设置了分页，页面数据条数,默认10
+                pageList: [5, 10, 15, 20, 30], //如果设置了分页，设置可供选择的页面数据条数。设置为All 则显示所有记录。
+                showPaginationSwitch: false, //是否显示 数据条数选择框
+                //search: true, //显示搜索框
+                showRefresh: true, //显示刷新按钮
+                sortable: true, //是否启用排序
+                //uniqueId: 'bookId', //对每一行指定唯一标识符。
+                clickToSelect: true, //是否启用点击选中行
+                toolbar: '#toolbar',
+                sidePagination: "server", //服务端处理分页 默认为'client-'
+                queryParams: function(params) { //自定义参数，这里的参数是传给后台的，我这是是分页用的
+                    return { //这里的params是table提供的,可自定义其他参数
+                        pageNumber: (params.offset / params.limit) + 1, //第几页
+                        pageSize: params.limit, //每页显示条数
+                        sortName: params.sort, //排序列名
+                        sortOrder: params.order, //排序命令asc desc
+                        searchText: params.search
+                    };
+                },
+                columns: [{
+                    checkbox: true
+                }, {table}{
+                    title: '操作',
+                    align: 'center',
+                    formatter: actionFormatter
+                }]
+            });
+        });
+
+        function actionFormatter(index, row) {
+            var result = "";
+            //result += "<button class='btn btn-sm btn-primary' title='编辑'><span class='glyphicon glyphicon-pencil'></span></button>\n";
+            result += '<button class="btn btn-sm btn-danger" onclick="vm.delete(' + row.id + ')"></span>remove</button>';
+
+            return result;
+        }
+    </script>
+</body>
+
+</html>

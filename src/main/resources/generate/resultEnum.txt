@@ -1,0 +1,27 @@
+package {enumPackageName};
+
+import lombok.Getter;
+
+@Getter
+public enum ResultEnum {
+    
+    SUCCESS(200, "成功"),
+    FAILED(0, "失败"),
+    ERROR(500, "错误");
+
+    /**
+     * 状态码
+     */
+	private Integer code;
+    
+    /**
+     * 消息
+     */
+    private String message;
+    
+    ResultEnum(Integer code, String message) {
+    	this.code = code;
+    	this.message = message;
+    }
+}
+
