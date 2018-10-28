@@ -195,50 +195,50 @@ public class GenerateUtils {
         StringBuilder insertValues = new StringBuilder();
         StringBuilder updateSets = new StringBuilder();
         StringBuilder where = new StringBuilder();
-        
-        List<BeanField> list = getBeanFields(beanInfo.getTableName());
-        list.forEach(beanField -> {
+
+        getBeanFields(beanInfo.getTableName()).forEach(beanField -> {
+            String name = beanField.getName();
+            String columnName = beanField.getColumnName();
+
             /* columnNames */
-            columnNames.append(",").append("\n\t\t").append(beanField.getColumnName());
+            columnNames.append(",").append("\n\t\t").append(columnName);
 
             /* resultMap */
-            resultMap.append("\t\t<result column=\"").append(beanField.getColumnName()).append("\" property=\"").append(beanField.getName()).append("\" />");
+            resultMap.append("\t\t<result column=\"").append(columnName).append("\" property=\"").append(name).append("\" />");
             resultMap.append("\n");
             
             /* insertColumns,insertValues */
-            if (!Objects.equals("id", beanField.getColumnName())) {
-                insertColumns.append(beanField.getColumnName()).append(", ");
-                insertValues.append("#{").append(beanField.getName()).append("}, ");
+            if (!Objects.equals("id", columnName)) {
+                insertColumns.append("\t\t\t<if test=\"").append(name).append(" != null\">\n\t\t\t\t")
+                        .append(columnName).append(",\n\t\t\t").append("</if>\n");
+                insertValues.append("\t\t\t<if test=\"").append(name).append(" != null\">\n\t\t\t\t")
+                        .append("#{").append(name).append("}, \n\t\t\t").append("</if>\n");
             }
             
             /* updateSets */
-            if (!Objects.equals("id", beanField.getColumnName())) {
-                updateSets.append("\t\t\t<if test=\"").append(beanField.getName()).append(" != null\">\n");
-                updateSets.append("\t\t\t\t").append(beanField.getColumnName()).append(" = #{").append(beanField.getName());
-                if (list.indexOf(beanField) == (list.size()-1)) {
-                    updateSets.append("} \n");
-                } else {
-                    updateSets.append("}, \n");
-                }
+            if (!Objects.equals("id", columnName)) {
+                updateSets.append("\t\t\t<if test=\"").append(name).append(" != null\">\n");
+                updateSets.append("\t\t\t\t").append(columnName).append(" = #{").append(name);
+                updateSets.append("}, \n");
                 updateSets.append("\t\t\t</if>\n");
             }
 
             /* where */
-            where.append("\t\t\t\t<if test=\"params.").append(beanField.getName()).append(" != null");
+            where.append("\t\t\t\t<if test=\"params.").append(name).append(" != null");
             if (Objects.equals(beanField.getType(), String.class.getSimpleName())) {
-                where.append(" and params.").append(beanField.getName()).append(" != ''\">\n");
+                where.append(" and params.").append(name).append(" != ''\">\n");
             } else {
                 where.append("\">\n");
             }
-            where.append("\t\t\t\t\tand ").append(beanField.getColumnName()).append(" = ").append("#{params.").append(beanField.getName())
+            where.append("\t\t\t\t\tand ").append(columnName).append(" = ").append("#{params.").append(name)
                             .append("} \n");
             where.append("\t\t\t\t</if>\n");
         });
         
         text = text.replace("{columnNames}", columnNames.substring(1,columnNames.length()));
         text = text.replace("{resultMap}", resultMap.toString());
-        text = text.replace("{insert_columns}", StringUtils.substringBeforeLast(insertColumns.toString(), ","));
-        text = text.replace("{insert_values}", StringUtils.substringBeforeLast(insertValues.toString(), ","));
+        text = text.replace("{insert_columns}", insertColumns.toString());
+        text = text.replace("{insert_values}", insertValues.toString());
         text = text.replace("{update_sets}", updateSets.toString());
         text = text.replace("{where}", where.toString());
         

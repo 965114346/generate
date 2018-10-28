@@ -40,9 +40,12 @@
 	
 	<insert id="save">
 		insert into {table_name}
-			({insert_columns}) 
-		values
-			({insert_values})
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+{insert_columns}
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+{insert_values}
+		</trim>
 	</insert>
 	
 	<delete id="deleteById">
@@ -56,9 +59,9 @@
 
 	<update id="update">
 		update {table_name} t
-		<set>
+		<trim prefix="set" suffixOverrides=",">
 {update_sets}
-		</set>
+		</trim>
 		where t.id = #{id}
 	</update>
 
