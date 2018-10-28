@@ -226,7 +226,7 @@ public class GenerateUtils {
             /* where */
             where.append("\t\t\t\t<if test=\"params.").append(beanField.getColumnName()).append(" != null");
             if (Objects.equals(beanField.getType(), String.class.getSimpleName())) {
-                where.append(" and params.").append(beanField.getColumnName()).append(" != ''\">\n");
+                where.append(" and params.").append(beanField.getName()).append(" != ''\">\n");
             } else {
                 where.append("\">\n");
             }
