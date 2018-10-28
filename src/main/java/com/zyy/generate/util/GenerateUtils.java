@@ -208,7 +208,7 @@ public class GenerateUtils {
             /* insertColumns,insertValues */
             if (!Objects.equals("id", beanField.getColumnName())) {
                 insertColumns.append(beanField.getColumnName()).append(", ");
-                insertValues.append("#{").append(beanField.getColumnName()).append("}, ");
+                insertValues.append("#{").append(beanField.getName()).append("}, ");
             }
             
             /* updateSets */
