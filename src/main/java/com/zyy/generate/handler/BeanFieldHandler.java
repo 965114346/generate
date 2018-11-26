@@ -38,6 +38,7 @@ public class BeanFieldHandler implements ResultSetHandler<List<BeanField>> {
         columnMapping.put("longtext", String.class.getSimpleName());
     }
 
+    @Override
     public List<BeanField> handle(ResultSet rs) throws SQLException {
         List<BeanField> list = new ArrayList<>();
         while (rs.next()) {
@@ -59,7 +60,7 @@ public class BeanFieldHandler implements ResultSetHandler<List<BeanField>> {
                 bf.setType(Long.class.getSimpleName());
             }
             
-            //bf.setColumnDefault(bf.getColumnDefault() == null ? "" : bf.getColumnDefault());
+            bf.setColumnDefault(bf.getColumnDefault());
             list.add(bf);
         }
         return list;
