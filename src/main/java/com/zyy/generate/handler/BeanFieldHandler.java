@@ -22,20 +22,20 @@ public class BeanFieldHandler implements ResultSetHandler<List<BeanField>> {
     /**
      * mysql类型与java类型部分对应关系
      */
-    private static Map<String, String> columnMapping = new HashMap<>();
+    private static Map<String, Class<?>> columnMapping = new HashMap<>();
     
     static {
-        columnMapping.put("int", Integer.class.getSimpleName());
-        columnMapping.put("tinyint", Integer.class.getSimpleName());
-        columnMapping.put("double", Double.class.getSimpleName());
-        columnMapping.put("float", Float.class.getSimpleName());
-        columnMapping.put("decimal", BigDecimal.class.getSimpleName());
-        columnMapping.put("date", Date.class.getSimpleName());
-        columnMapping.put("timestamp", Date.class.getSimpleName());
-        columnMapping.put("datetime", Date.class.getSimpleName());
-        columnMapping.put("varchar", String.class.getSimpleName());
-        columnMapping.put("text", String.class.getSimpleName());
-        columnMapping.put("longtext", String.class.getSimpleName());
+        columnMapping.put("int", Integer.class);
+        columnMapping.put("tinyint", Integer.class);
+        columnMapping.put("double", Double.class);
+        columnMapping.put("float", Float.class);
+        columnMapping.put("decimal", BigDecimal.class);
+        columnMapping.put("date", Date.class);
+        columnMapping.put("timestamp", Date.class);
+        columnMapping.put("datetime", Date.class);
+        columnMapping.put("varchar", String.class);
+        columnMapping.put("text", String.class);
+        columnMapping.put("longtext", String.class);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class BeanFieldHandler implements ResultSetHandler<List<BeanField>> {
             bf.setColumnDefault(rs.getString("column_default"));
             
             bf.setName(StrUtils.str2hump(bf.getColumnName()));
-            String type = columnMapping.get(bf.getColumnType());
+            String type = columnMapping.get(bf.getColumnType()).getSimpleName();
             if (type == null) {
                 type = String.class.getSimpleName();
             }
