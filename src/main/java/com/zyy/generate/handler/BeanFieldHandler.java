@@ -3,11 +3,7 @@ package com.zyy.generate.handler;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.commons.dbutils.ResultSetHandler;
 
@@ -26,6 +22,7 @@ public class BeanFieldHandler implements ResultSetHandler<List<BeanField>> {
     
     static {
         columnMapping.put("int", Integer.class);
+        columnMapping.put("bigint", Long.class);
         columnMapping.put("tinyint", Integer.class);
         columnMapping.put("double", Double.class);
         columnMapping.put("float", Float.class);
@@ -49,7 +46,12 @@ public class BeanFieldHandler implements ResultSetHandler<List<BeanField>> {
             bf.setColumnDefault(rs.getString("column_default"));
             
             bf.setName(StrUtils.str2hump(bf.getColumnName()));
-            String type = columnMapping.get(bf.getColumnType()).getSimpleName();
+            Class<?> aClass = columnMapping.get(bf.getColumnType());
+            if (Objects.isNull(aClass)) {
+                throw new NullPointerException("未匹配到映射类型" + bf.getColumnType());
+            }
+
+            String type = aClass.getSimpleName();
             if (type == null) {
                 type = String.class.getSimpleName();
             }

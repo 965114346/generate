@@ -201,7 +201,7 @@ public class GenerateUtils {
             String columnName = beanField.getColumnName();
 
             /* columnNames */
-            columnNames.append(",").append("\n\t\t").append(columnName);
+            columnNames.append(",").append("\n\t\t`").append(columnName).append("`");
 
             /* resultMap */
             resultMap.append("\t\t<result column=\"").append(columnName).append("\" property=\"").append(name).append("\" />");
@@ -210,7 +210,7 @@ public class GenerateUtils {
             /* insertColumns,insertValues */
             if (!Objects.equals("id", columnName)) {
                 insertColumns.append("\t\t\t<if test=\"").append(name).append(" != null\">\n\t\t\t\t")
-                        .append(columnName).append(",\n\t\t\t").append("</if>\n");
+                        .append("`").append(columnName).append("`,\n\t\t\t").append("</if>\n");
                 insertValues.append("\t\t\t<if test=\"").append(name).append(" != null\">\n\t\t\t\t")
                         .append("#{").append(name).append("}, \n\t\t\t").append("</if>\n");
             }
@@ -218,7 +218,7 @@ public class GenerateUtils {
             /* updateSets */
             if (!Objects.equals("id", columnName)) {
                 updateSets.append("\t\t\t<if test=\"").append(name).append(" != null\">\n");
-                updateSets.append("\t\t\t\t").append(columnName).append(" = #{").append(name);
+                updateSets.append("\t\t\t\t`").append(columnName).append("` = #{").append(name);
                 updateSets.append("}, \n");
                 updateSets.append("\t\t\t</if>\n");
             }
@@ -230,7 +230,7 @@ public class GenerateUtils {
             } else {
                 where.append("\">\n");
             }
-            where.append("\t\t\t\t\tand ").append(columnName).append(" = ").append("#{params.").append(name)
+            where.append("\t\t\t\t\tand `").append(columnName).append("` = ").append("#{params.").append(name)
                             .append("} \n");
             where.append("\t\t\t\t</if>\n");
         });
