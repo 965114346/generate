@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 数据库配置文件 -->
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <!-- 组件扫描 -->
+    <context:component-scan base-package="com.zyy.generate"/>
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${db.driverClass}"/>
+        <property name="jdbcUrl" value="${db.jdbcUrl}"/>
+        <property name="user" value="${db.user}"/>
+        <property name="password" value="${db.password}"/>
+    </bean>
+
+    <!-- mybatis sessionFactory -->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.zyy.generate.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
+    </bean>
+
+    <!-- 模板路径 -->
+    <bean id="template" class="java.io.File">
+        <constructor-arg value="src/main/resources/template"/>
+    </bean>
+
+    <!-- freemarker -->
+    <bean id="configuration" class="freemarker.template.Configuration">
+        <constructor-arg value="#{T(freemarker.template.Configuration).VERSION_2_3_23}"/>
+        <property name="directoryForTemplateLoading" ref="template"/>
+    </bean>
+
+    <!-- 包，名称生成配置 -->
+    <bean id="beanConfig" class="com.zyy.generate.config.BeanConfig">
+        <property name="author" value="yangyang.zhang"/>
+        <property name="output" value="src/main/resources/output"/>
+        <property name="basePackage" value="com.zyy"/>
+        <property name="modelName" value="music"/>
+
+        <property name="beanPackage" value="pojo"/>
+        <property name="beanNamePre" value=""/>
+        <property name="beanNameSuf" value=""/>
+
+        <property name="daoPackage" value="dao"/>
+        <property name="daoNamePre" value=""/>
+        <property name="daoNameSuf" value="Mapper"/>
+
+        <property name="servicePackage" value="service"/>
+        <property name="serviceNamePre" value=""/>
+        <property name="serviceNameSuf" value="Service"/>
+
+        <property name="serviceImplPackage" value="service.impl"/>
+        <property name="serviceImplNamePre" value=""/>
+        <property name="serviceImplNameSuf" value="ServiceImpl"/>
+
+        <property name="controllerPackage" value="controller"/>
+        <property name="controllerNamePre" value=""/>
+        <property name="controllerNameSuf" value="Controller"/>
+    </bean>
+</beans>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyy.generate.dao.GenerateMapper">
+
+    <resultMap id="columnMap" type="com.zyy.generate.pojo.Column">
+        <result property="tableSchema" column="table_schema"/>
+        <result property="tableName" column="table_name"/>
+        <result property="tableCatalog" column="table_catalog"/>
+        <result property="characterMaximumLength" column="character_maximum_length"/>
+        <result property="characterOcterLength" column="character_octer_length"/>
+        <result property="characterSetName" column="character_set_name"/>
+        <result property="collationName" column="collation_name"/>
+        <result property="columnComment" column="column_comment"/>
+        <result property="columnDefault" column="column_default"/>
+        <result property="columnKey" column="column_key"/>
+        <result property="columnName" column="column_name"/>
+        <result property="columnType" column="column_type"/>
+        <result property="dataType" column="data_type"/>
+        <result property="datetimePrecision" column="datetime_precision"/>
+        <result property="extra" column="extra"/>
+        <result property="generationExpressic" column="generation_expressic"/>
+        <result property="isNullable" column="is_nullable"/>
+        <result property="numericPrecision" column="numeric_precision"/>
+        <result property="numericPrecisionRadix" column="numeric_precision_radix"/>
+        <result property="numericScale" column="numeric_acale"/>
+        <result property="ordinalPosition" column="ordinal_position"/>
+        <result property="privileges" column="privileges"/>
+    </resultMap>
+
+    <resultMap id="tableMap" type="com.zyy.generate.pojo.Table">
+        <result property="autoIncrement" column="auto_increment"/>
+        <result property="avgRowLength" column="avg_row_length"/>
+        <result property="checksum" column="checksum"/>
+        <result property="createOptions" column="create_options"/>
+        <result property="checkTime" column="check_time"/>
+        <result property="createTime" column="create_time"/>
+        <result property="dataFree" column="data_free"/>
+        <result property="dataLength" column="data_length"/>
+        <result property="engine" column="engine"/>
+        <result property="indexLength" column="index_length"/>
+        <result property="maxDataLength" column="max_data_length"/>
+        <result property="rowFormat" column="row_format"/>
+        <result property="tableCatalog" column="table_catalog"/>
+        <result property="tableCollation" column="table_collation"/>
+        <result property="tableComment" column="table_comment"/>
+        <result property="tableName" column="table_name"/>
+        <result property="tableRows" column="table_rows"/>
+        <result property="tableSchema" column="table_schema"/>
+        <result property="tableType" column="table_type"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="version" column="version"/>
+    </resultMap>
+
+    <select id="queryColumns" parameterType="java.lang.String" resultMap="columnMap">
+        SELECT * FROM information_schema.columns WHERE table_name = #{value } AND table_schema = (SELECT database())
+    </select>
+
+    <select id="queryTable" parameterType="java.lang.String" resultMap="tableMap">
+        SELECT * FROM information_schema.tables WHERE table_name = #{value } AND table_schema = (SELECT database())
+    </select>
+</mapper>

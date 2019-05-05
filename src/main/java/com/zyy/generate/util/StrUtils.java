@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 
+ * @author yangyang.zhang
  * 字符串转化工具类
  */
 public class StrUtils {
@@ -25,7 +25,7 @@ public class StrUtils {
                 sb.append(str);
                 return sb.toString();
             }
-            
+
             List<String> chars = Arrays.asList(str.split("_"));
             if (chars.isEmpty()) {
                 return sb.toString();
@@ -37,38 +37,15 @@ public class StrUtils {
                 if (StringUtils.isEmpty(s)) {
                     continue;
                 }
-                
-                sb.append(s.substring(0, 1).toUpperCase());
-                if (s.length() > 1) {
-                    sb.append(s.substring(1));
-                }
+
+                sb.append(StringUtils.capitalize(s));
             }
 
             return sb.toString();
     }
-    
-    /**
-     * 返回首字母大写的字符串
-     */
-    public static String upperFirstChar(String string) {
-            String name = str2hump(string);
-            String firstChar = name.substring(0, 1);
-            name = name.replaceFirst(firstChar, firstChar.toUpperCase());
 
-            return name;
-    }
-
-    /**
-     * 变量名
-     * 
-     * @param beanName
-     * @return
-     */
-    public static String lowerFirstChar(String beanName) {
-            String name = str2hump(beanName);
-            String firstChar = name.substring(0, 1);
-            name = name.replaceFirst(firstChar, firstChar.toLowerCase());
-
-            return name;
+    public static void main(String[] args) {
+        String t_blog = str2hump("t_blog");
+        System.out.println(t_blog);
     }
 }
