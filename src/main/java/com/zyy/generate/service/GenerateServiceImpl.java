@@ -138,8 +138,9 @@ public class GenerateServiceImpl implements GenerateService {
 
             Class<?> aClass = columnMapping.get(column.getDataType());
             if (Objects.isNull(aClass)) {
-                log.error("未匹配到映射类型: {}", column.getDataType());
                 log.error("            表名: {}", tableName);
+                log.error("        字段名称: {}", column.getColumnName());
+                log.error("未匹配到映射类型: {}", column.getDataType());
                 throw new RuntimeException();
             }
 

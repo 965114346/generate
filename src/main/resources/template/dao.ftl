@@ -16,7 +16,7 @@ public interface ${daoName} {
     * @param id
     * @return
     */
-    ${beanName} selectByPrimaryKey(Integer id);
+    ${beanName} selectByPrimaryKey(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list> id);
 
     /**
     * 条件查询${tableComment}列表
@@ -44,12 +44,12 @@ public interface ${daoName} {
     * @param id
     * @return
     */
-    Integer deleteByPrimaryKey(Integer id);
+    Integer deleteByPrimaryKey(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list> id);
 
     /**
     * 根据id批量删除${tableComment}
     * @param ids
     * @return
     */
-    Integer batchDeleteByPrimaryKey(List<Integer> ids);
+    Integer batchDeleteByPrimaryKey(List<<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>> ids);
 }

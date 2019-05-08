@@ -17,7 +17,7 @@
 	</sql>
 
 	<!-- 根据id查询${tableComment} -->
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>" >
 		select
 		<include refid="Base_Column_List" />
 		from ${tableName}
@@ -58,7 +58,7 @@
 
 	<!-- 插入${tableComment} -->
 	<insert id="insertSelective" parameterType="${beanPackage}.${beanName}" >
-		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+		<selectKey resultType="<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>" keyProperty="id" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 		insert into ${tableName}
@@ -100,12 +100,12 @@
 	</update>
 
 	<!-- 根据id删除${tableComment} -->
-	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	<update id="deleteByPrimaryKey" parameterType="<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>">
 		update ${tableName} set is_delete = 2 where id = <#noparse>#</#noparse>{id}
 	</update>
 
 	<!-- 根据id批量删除${tableComment} -->
-	<update id="batchDeleteByPrimaryKey" parameterType="java.lang.Integer">
+	<update id="batchDeleteByPrimaryKey" parameterType="<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>">
 		update ${tableName} set is_delete = 2 where id in
 		<foreach item="id" collection="list" open="(" separator="," close=")">
 			<#noparse>#</#noparse>{id}

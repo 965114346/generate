@@ -11,7 +11,7 @@ public interface ${serviceName} {
     * @param id
     * @return
     */
-    ${beanName} selectById(Integer id);
+    ${beanName} selectById(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list> id);
 
     /**
     * 分页查询${tableComment}
@@ -48,12 +48,12 @@ public interface ${serviceName} {
     * @param id
     * @return
     */
-    JSONObject deleteById(Integer id);
+    JSONObject deleteById(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list> id);
 
     /**
     * 批量删除${tableComment}(也可单个删除${tableComment})
     * @param ids ${tableComment}ID字符串用逗号进行分割
     * @return
     */
-    JSONObject batchDeleteById(List<Integer> ids);
+    JSONObject batchDeleteById(List<<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>> ids);
 }

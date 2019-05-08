@@ -17,7 +17,7 @@ public class ${serviceImplName} implements ${serviceName} {
     private static final Logger log = LoggerFactory.getLogger(${serviceImplName}.class);
 
     @Override
-    public ${beanName} selectById(Integer id) {
+    public ${beanName} selectById(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list> id) {
         try (SqlSession session = DBFactory.instance().getSession()){
             ${daoName} mapper = session.getMapper(${daoName}.class);
             return mapper.selectByPrimaryKey(id);
@@ -88,7 +88,7 @@ public class ${serviceImplName} implements ${serviceName} {
     }
 
     @Override
-    public JSONObject deleteById(Integer id) {
+    public JSONObject deleteById(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list> id) {
         SqlSession session = DBFactory.instance().getSession();
         try {
             ${daoName} mapper = session.getMapper(${daoName}.class);
@@ -106,7 +106,7 @@ public class ${serviceImplName} implements ${serviceName} {
     }
 
     @Override
-    public JSONObject batchDeleteById(List<Integer> ids) {
+    public JSONObject batchDeleteById(List<<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>> ids) {
         SqlSession session = DBFactory.instance().getSession();
         try {
             ${daoName} mapper = session.getMapper(${daoName}.class);
