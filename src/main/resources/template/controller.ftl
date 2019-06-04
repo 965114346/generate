@@ -1,15 +1,19 @@
 package ${controllerPackage};
 
-import com.elan.question.BasePermissionController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import ${servicePackage}.${serviceName};
-import ${serviceImplPackage}.${serviceImplName};
 
-public class ${controllerName} extends BasePermissionController {
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@Controller
+@RequestMapping("/${beanVar}")
+public class ${controllerName} {
+    <#--private static final Logger log = LoggerFactory.getLogger(${controllerName}.class);-->
+
+    @Autowired
     private ${serviceName} service;
-
-    public ${controllerName}() {
-        service = new ${serviceImplName}();
-    }
 }

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author yangyang.zhang
@@ -37,7 +38,7 @@ public class GenerateServiceImpl implements GenerateService {
     private BeanConfig beanConfig;
 
     @Override
-    public void run(List<String> tableList) {
+    public void run(String... tableList) {
         for (String tableName : tableList) {
             run(tableName);
         }
@@ -52,8 +53,8 @@ public class GenerateServiceImpl implements GenerateService {
         log.info("======================>> columnList  : {}", columnList);
 
         // 截取第一个下划线后的字符串   adv_picture  <--  rcg_adv_picture
-        // String entity = StringUtils.substringAfter(tableName, "_");
-        String entity = tableName;
+        String entity = StringUtils.substringAfter(tableName, "_");
+        //String entity = tableName;
         // advPicture  <--  adv_picture
         String beanVar = StrUtils.str2hump(entity);
         // 类名驼峰命名  AdvPicture  <-- adv_picture
@@ -160,8 +161,18 @@ public class GenerateServiceImpl implements GenerateService {
         return configuration.getTemplate(name);
     }
 
+    /**
+     * 获取包完整路径
+     * @param name 基本包名称
+     * @return
+     */
     private String getPackagePath(String name) {
-        return StringUtils.join(Arrays.asList(beanConfig.getBasePackage(), name, beanConfig.getModelName()), ".");
+        List<String> list = Arrays.asList(beanConfig.getBasePackage(), name, beanConfig.getModelName())
+                .stream()
+                .filter(StringUtils::isNotBlank)
+                .collect(Collectors.toList());
+
+        return StringUtils.join(list, ".");
     }
 
     /**

@@ -18,5 +18,5 @@ public interface GenerateService {
      * 多表
      * @param tableList
      */
-    void run(List<String> tableList);
+    void run(String... tableList);
 }

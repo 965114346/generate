@@ -2,6 +2,8 @@ package com.zyy.generate.pojo;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author yangyang.zhang
  * @date 2019/3/31 16:45
@@ -113,4 +115,9 @@ public class Table {
      * 表的注释、备注
      */
     private String tableComment;
+
+    /**
+     * 字段列表
+     */
+    private List<Column> columnList;
 }

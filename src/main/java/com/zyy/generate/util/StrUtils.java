@@ -44,7 +44,9 @@ public class StrUtils {
             return sb.toString();
     }
 
-    public static void main(String[] args) {
+    public static void main(String args[]) {
+        int x = 4;
+        System.out.println(x>4 ? 99.9:9);
         String t_blog = str2hump("t_blog");
         System.out.println(t_blog);
     }

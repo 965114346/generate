@@ -24,31 +24,45 @@
     <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
-        <property name="configLocation" value="classpath:mybatis-config.xml"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.zyy.generate.dao"/>
-        <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
     </bean>
 
-    <!-- 模板路径 -->
-    <bean id="template" class="java.io.File">
-        <constructor-arg value="src/main/resources/template"/>
+    <!-- 文件模板 -->
+    <bean id="fileTemplateLoader" class="freemarker.cache.FileTemplateLoader">
+        <constructor-arg>
+            <!-- 模板路径 -->
+            <bean class="java.io.File">
+                <constructor-arg value="src/main/resources/template"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <!-- 聚合模板 按照顺序加载模板 -->
+    <bean id="multiTemplateLoader" class="freemarker.cache.MultiTemplateLoader">
+        <constructor-arg>
+            <array>
+                <ref bean="fileTemplateLoader"/>
+                <!-- 数据源模板 -->
+                <ref bean="dataSourceTemplateLoader"/>
+            </array>
+        </constructor-arg>
     </bean>
 
     <!-- freemarker -->
     <bean id="configuration" class="freemarker.template.Configuration">
         <constructor-arg value="#{T(freemarker.template.Configuration).VERSION_2_3_23}"/>
-        <property name="directoryForTemplateLoading" ref="template"/>
+        <property name="templateLoader" ref="multiTemplateLoader"/>
     </bean>
 
     <!-- 包，名称生成配置 -->
     <bean id="beanConfig" class="com.zyy.generate.config.BeanConfig">
         <property name="author" value="yangyang.zhang"/>
-        <property name="output" value="src/main/resources/output"/>
-        <property name="basePackage" value="com.zyy"/>
-        <property name="modelName" value="music"/>
+        <property name="output" value="output"/>
+        <property name="basePackage" value="com.zyy.taotao.rest"/>
+        <property name="modelName" value=""/>
 
         <property name="beanPackage" value="pojo"/>
         <property name="beanNamePre" value=""/>
@@ -62,12 +76,14 @@
         <property name="serviceNamePre" value=""/>
         <property name="serviceNameSuf" value="Service"/>
 
-        <property name="serviceImplPackage" value="service.impl"/>
+        <property name="serviceImplPackage" value="service"/>
         <property name="serviceImplNamePre" value=""/>
         <property name="serviceImplNameSuf" value="ServiceImpl"/>
 
         <property name="controllerPackage" value="controller"/>
         <property name="controllerNamePre" value=""/>
         <property name="controllerNameSuf" value="Controller"/>
+
+        <property name="mapperPackage" value="mapper"/>
     </bean>
 </beans>

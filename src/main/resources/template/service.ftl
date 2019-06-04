@@ -1,17 +1,18 @@
 package ${servicePackage};
 
-import com.alibaba.fastjson.JSONObject;
-import ${beanPackage}.${beanName};
+import java.util.List;
+
 import com.github.pagehelper.PageInfo;
+import ${beanPackage}.${beanName};
 
 public interface ${serviceName} {
 
     /**
     * 根据id查询${tableComment}
-    * @param id
+    * @param <#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.name}</#if></#list>
     * @return
     */
-    ${beanName} selectById(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list> id);
+    ${beanName} selectByPrimaryKey(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.classSimpleName} ${beanField.name}</#if></#list>);
 
     /**
     * 分页查询${tableComment}
@@ -34,26 +35,26 @@ public interface ${serviceName} {
     * @param ${beanVar}
     * @return
     */
-    JSONObject insert(${beanName} ${beanVar});
+    Integer insert(${beanName} ${beanVar});
 
     /**
     * 根据id更新${tableComment}
     * @param ${beanVar}
     * @return
     */
-    JSONObject updateById(${beanName} ${beanVar});
+    Integer updateByPrimaryKey(${beanName} ${beanVar});
 
     /**
     * 单个删除${tableComment}
-    * @param id
+    * @param <#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.name}</#if></#list>
     * @return
     */
-    JSONObject deleteById(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list> id);
+    Integer deleteByPrimaryKey(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.classSimpleName} ${beanField.name}</#if></#list>);
 
     /**
     * 批量删除${tableComment}(也可单个删除${tableComment})
-    * @param ids ${tableComment}ID字符串用逗号进行分割
+    * @param <#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.name}s</#if></#list>
     * @return
     */
-    JSONObject batchDeleteById(List<<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>> ids);
+    Integer batchDeleteByPrimaryKey(List<<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.classSimpleName}</#if></#list>> <#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.name}s</#if></#list>);
 }
