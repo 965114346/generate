@@ -16,14 +16,14 @@ public interface ${daoGenerate@name} {
     * @param id
     * @return
     */
-    ${beanGenerate@name} selectByPrimaryKey(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list> id);
+    ${beanGenerate@name} selectByPrimaryKey(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.classSimpleName}</#if></#list> id);
 
     /**
     * 条件查询${tableComment}列表
     * @param ${beanVar}
     * @return
     */
-    List<${beanGenerate@name}}> selectByCondition(${beanGenerate@name} ${beanVar});
+    List<${beanGenerate@name}> selectByCondition(${beanGenerate@name} ${beanVar});
 
     /**
     * 插入${tableComment}
@@ -44,12 +44,12 @@ public interface ${daoGenerate@name} {
     * @param id
     * @return
     */
-    Integer deleteByPrimaryKey(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list> id);
+    Integer deleteByPrimaryKey(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.classSimpleName}</#if></#list> id);
 
     /**
     * 根据id批量删除${tableComment}
     * @param ids
     * @return
     */
-    Integer batchDeleteByPrimaryKey(List<<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>> ids);
+    Integer batchDeleteByPrimaryKey(List<<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.classSimpleName}</#if></#list>> ids);
 }
