@@ -5,7 +5,6 @@ import com.zyy.generate.util.StrUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-@Component
 public class ServiceGenerate implements Generate {
 
     @Override

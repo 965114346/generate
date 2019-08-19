@@ -95,7 +95,7 @@ public class GenerateProxy {
             for (Generate generate : generateList) {
                 generate(generate.getTemplateName(),
                         dataMap,
-                        generate.getName(beanConfig, bean),
+                        StringUtils.uncapitalize(generate.getName(beanConfig, bean)),
                         generate.getPackagePath(beanConfig),
                         generate.getFileType());
             }
@@ -141,23 +141,19 @@ public class GenerateProxy {
     /**
      * mysql类型与java类型部分对应关系
      */
-    private static Map<String, Class<?>> columnMapping = new HashMap<>();
+    private static Map<String, String> columnMapping = new HashMap<>();
 
     static {
-        columnMapping.put("int", Integer.class);
-        columnMapping.put("bigint", Long.class);
-        columnMapping.put("tinyint", Integer.class);
-        columnMapping.put("double", Double.class);
-        columnMapping.put("float", Float.class);
-        columnMapping.put("decimal", BigDecimal.class);
-        columnMapping.put("date", Date.class);
-        columnMapping.put("timestamp", Date.class);
-        columnMapping.put("datetime", Date.class);
-        columnMapping.put("varchar", String.class);
-        columnMapping.put("char", String.class);
-        columnMapping.put("text", String.class);
-        columnMapping.put("longtext", String.class);
-        columnMapping.put("mediumtext", String.class);
+        columnMapping.put("int", "int64");
+        columnMapping.put("bigint", "int64");
+        columnMapping.put("tinyint", "int");
+        columnMapping.put("date", "string");
+        columnMapping.put("datetime", "string");
+        columnMapping.put("varchar", "string");
+        columnMapping.put("char", "string");
+        columnMapping.put("text", "string");
+        columnMapping.put("longtext", "string");
+        columnMapping.put("mediumtext", "string");
     }
 
     private List<Column> getColumnList(String tableName) {
@@ -168,7 +164,7 @@ public class GenerateProxy {
             column.setName(StrUtils.str2hump(column.getColumnName()));
             column.setFirstWordUpperCase(StringUtils.capitalize(column.getName()));
 
-            Class<?> aClass = columnMapping.get(column.getDataType());
+            String aClass = columnMapping.get(column.getDataType());
             if (Objects.isNull(aClass)) {
                 log.error("            表名: {}", tableName);
                 log.error("        字段名称: {}", column.getColumnName());
@@ -176,8 +172,8 @@ public class GenerateProxy {
                 throw new RuntimeException();
             }
 
-            column.setClassName(aClass.getName());
-            column.setClassSimpleName(aClass.getSimpleName());
+            column.setClassName(aClass);
+            column.setClassSimpleName(aClass);
         }
         return columnList;
     }

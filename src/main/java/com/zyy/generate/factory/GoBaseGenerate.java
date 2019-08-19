@@ -1,28 +1,28 @@
 package com.zyy.generate.factory;
 
 import com.zyy.generate.config.BeanConfig;
-import com.zyy.generate.util.StrUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-public class ServiceImplGenerate implements Generate {
+@Component
+public class GoBaseGenerate implements Generate {
     @Override
     public String getPackagePath(BeanConfig beanConfig) {
-        return StrUtils.getPackagePath(beanConfig.getServiceImplPackage(), beanConfig);
+        return beanConfig.getModelName();
     }
 
     @Override
     public String getTemplateName() {
-        return "serviceImpl.ftl";
+        return "goBase.ftl";
     }
 
     @Override
     public String getName(BeanConfig beanConfig, String beanName) {
-        return StringUtils.join(beanConfig.getServiceImplNamePre(), beanName, beanConfig.getServiceImplNameSuf());
+        return beanName;
     }
 
     @Override
     public String getFileType() {
-        return "java";
+        return "go";
     }
 }

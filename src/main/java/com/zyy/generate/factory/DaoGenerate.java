@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
  * @author yangyang.zhang
  * @date 2019年08月17日22:36:09
  */
-@Component
 public class DaoGenerate implements Generate {
 
     @Override
