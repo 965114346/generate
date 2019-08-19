@@ -1,8 +1,11 @@
 package com.zyy.generate.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.zyy.generate.config.BeanConfig;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -42,6 +45,15 @@ public class StrUtils {
             }
 
             return sb.toString();
+    }
+
+    public static String getPackagePath(String name, BeanConfig beanConfig) {
+        List<String> list = Arrays.asList(beanConfig.getBasePackage(), name, beanConfig.getModelName())
+                .stream()
+                .filter(StringUtils::isNotBlank)
+                .collect(Collectors.toList());
+
+        return StringUtils.join(list, ".");
     }
 
     public static void main(String args[]) {

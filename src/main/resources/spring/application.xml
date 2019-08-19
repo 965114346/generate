@@ -8,17 +8,10 @@
        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- 数据库配置文件 -->
-    <context:property-placeholder location="classpath:db.properties"/>
+    <!--<context:property-placeholder location="classpath:db.properties"/>-->
 
     <!-- 组件扫描 -->
     <context:component-scan base-package="com.zyy.generate"/>
-
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="driverClass" value="${db.driverClass}"/>
-        <property name="jdbcUrl" value="${db.jdbcUrl}"/>
-        <property name="user" value="${db.user}"/>
-        <property name="password" value="${db.password}"/>
-    </bean>
 
     <!-- mybatis sessionFactory -->
     <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -58,32 +51,4 @@
     </bean>
 
     <!-- 包，名称生成配置 -->
-    <bean id="beanConfig" class="com.zyy.generate.config.BeanConfig">
-        <property name="author" value="yangyang.zhang"/>
-        <property name="output" value="output"/>
-        <property name="basePackage" value="com.zyy.taotao.rest"/>
-        <property name="modelName" value=""/>
-
-        <property name="beanPackage" value="pojo"/>
-        <property name="beanNamePre" value=""/>
-        <property name="beanNameSuf" value=""/>
-
-        <property name="daoPackage" value="dao"/>
-        <property name="daoNamePre" value=""/>
-        <property name="daoNameSuf" value="Mapper"/>
-
-        <property name="servicePackage" value="service"/>
-        <property name="serviceNamePre" value=""/>
-        <property name="serviceNameSuf" value="Service"/>
-
-        <property name="serviceImplPackage" value="service"/>
-        <property name="serviceImplNamePre" value=""/>
-        <property name="serviceImplNameSuf" value="ServiceImpl"/>
-
-        <property name="controllerPackage" value="controller"/>
-        <property name="controllerNamePre" value=""/>
-        <property name="controllerNameSuf" value="Controller"/>
-
-        <property name="mapperPackage" value="mapper"/>
-    </bean>
 </beans>

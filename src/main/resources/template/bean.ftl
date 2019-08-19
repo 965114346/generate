@@ -1,4 +1,4 @@
-package ${beanPackage};
+package ${beanGenerate@packagePath};
 
 import java.util.Date;
 
@@ -6,10 +6,10 @@ import lombok.Data;
 
 /**
  * @author ${author}
- * ${beanName}
+ * ${beanGenerate@name}
  */
 @Data
-public class ${beanName} {
+public class ${beanGenerate@name} {
     <#list columnList as column>
 
     <#if column.columnComment??>

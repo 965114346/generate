@@ -2,6 +2,8 @@ package com.zyy.generate.config;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author yangyang.zhang
  * @date 2019/3/31 16:18
@@ -108,4 +110,9 @@ public class BeanConfig {
      * 文件输出
      */
     private String output;
+
+    /**
+     * 表名称列表
+     */
+    private List<String> tableList;
 }

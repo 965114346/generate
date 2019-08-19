@@ -1,6 +1,6 @@
-package ${daoPackage};
+package ${daoGenerate@packagePath};
 
-import ${beanPackage}.${beanName};
+import ${beanGenerate@packagePath}.${beanGenerate@name};
 
 import java.util.List;
 
@@ -9,35 +9,35 @@ import java.util.List;
 * ${tableComment}
 */
 </#if>
-public interface ${daoName} {
+public interface ${daoGenerate@name} {
 
     /**
     * 根据id查询${tableComment}
     * @param id
     * @return
     */
-    ${beanName} selectByPrimaryKey(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list> id);
+    ${beanGenerate@name} selectByPrimaryKey(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list> id);
 
     /**
     * 条件查询${tableComment}列表
     * @param ${beanVar}
     * @return
     */
-    List<${beanName}> selectByCondition(${beanName} ${beanVar});
+    List<${beanGenerate@name}}> selectByCondition(${beanGenerate@name} ${beanVar});
 
     /**
     * 插入${tableComment}
     * @param ${beanVar}
     * @return
     */
-    Integer insertSelective(${beanName} ${beanVar});
+    Integer insertSelective(${beanGenerate@name} ${beanVar});
 
     /**
     * 更新${tableComment}
     * @param ${beanVar}
     * @return
     */
-    Integer updateByPrimaryKey(${beanName} ${beanVar});
+    Integer updateByPrimaryKey(${beanGenerate@name} ${beanVar});
 
     /**
     * 根据id删除${tableComment}
