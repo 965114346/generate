@@ -54,7 +54,7 @@ public class GenerateApplication {
         // 输出路径
         config.setOutput("output");
         // 模块名
-        config.setModelName("login_and_register");
+        config.setModelName("user");
 
         return config;
     }
