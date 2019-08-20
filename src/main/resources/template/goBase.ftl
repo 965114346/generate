@@ -60,7 +60,7 @@ func Insert${goBaseGenerate@name}Selective(${beanVar} *${goBaseGenerate@name}) e
 		return err
 	}
 
-	log.Error(fmt.Sprintf("update succ: %d", row))
+	log.Info(fmt.Sprintf("update succ: %d", row))
     return nil
 }
 
@@ -79,6 +79,6 @@ func Delete${goBaseGenerate@name}ByPrimaryKey(primaryKey <#list columnList as be
 		return err
 	}
 
-	log.Error(fmt.Sprintf("update succ: %d", row))
+	log.Info(fmt.Sprintf("update succ: %d", row))
     return nil
 }

@@ -27,14 +27,9 @@ public class GenerateFactoryBean {
     }
 
     /**
-     * 获取生成器
-     * @param generateName 生成器bean名称
-     * @return 对应bean的生成器
+     * 获取自定义的生成器集合
+     * @return 生成器
      */
-    public Generate getGenerate(String generateName) {
-        return generateMap.get(generateName);
-    }
-
     public Map<String, Generate> getGenerateMap() {
         return generateMap;
     }

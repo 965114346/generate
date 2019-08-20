@@ -3,7 +3,6 @@ package com.zyy.generate.factory;
 import com.zyy.generate.config.BeanConfig;
 import com.zyy.generate.util.StrUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
 
 /**
  * @author yangyang.zhang
