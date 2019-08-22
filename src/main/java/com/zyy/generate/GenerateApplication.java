@@ -47,7 +47,7 @@ public class GenerateApplication {
     public BeanConfig beanConfig() {
         BeanConfig config = new BeanConfig();
 
-        String[] tableList = {"t_user_base", "t_user_fund"};
+        String[] tableList = {"t_user_invitation", "t_user_base"};
 
         // 生成表
         config.setTableList(Arrays.asList(tableList));

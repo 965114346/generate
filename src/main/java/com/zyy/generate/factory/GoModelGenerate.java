@@ -1,11 +1,10 @@
 package com.zyy.generate.factory;
 
 import com.zyy.generate.config.BeanConfig;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GoBaseGenerate implements Generate {
+public class GoModelGenerate implements Generate {
     @Override
     public String getPackagePath(BeanConfig beanConfig) {
         return beanConfig.getModelName();
@@ -13,7 +12,7 @@ public class GoBaseGenerate implements Generate {
 
     @Override
     public String getTemplateName() {
-        return "goBase.ftl";
+        return "goModel.ftl";
     }
 
     @Override
