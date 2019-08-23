@@ -26,21 +26,21 @@ func (${goModelGenerate@name}) TableName() string {
 	return "${tableName}"
 }
 
-func Select${goModelGenerate@name}ByPrimaryKey(primaryKey <#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>) *${goModelGenerate@name} {
+func Select${goModelGenerate@name}ByPrimaryKey(primaryKey <#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>) (*${goModelGenerate@name}, error) {
 	logf.Req.Info(fmt.Sprintf("Select${goModelGenerate@name}ByPrimaryKey, param:%d", primaryKey))
 	var ${beanVar} ${goModelGenerate@name}
 
-    models.Db().Select(${beanVar}Column).First(&${beanVar}, primaryKey)
-	return &${beanVar}
+    err := models.Db().Select(${beanVar}Column).First(&${beanVar}, primaryKey).Error
+	return &${beanVar}, err
 }
 
-func Select${goModelGenerate@name}One(where *${goModelGenerate@name}) *${goModelGenerate@name} {
+func Select${goModelGenerate@name}One(where *${goModelGenerate@name}) (*${goModelGenerate@name}, error) {
 	logf.Req.Info(fmt.Sprintf("Select${goModelGenerate@name}One, param:%+v", *where))
 
 	var ${beanVar} ${goModelGenerate@name}
-    models.Db().Select(${beanVar}Column).Where(where).First(&${beanVar})
+    err := models.Db().Select(${beanVar}Column).Where(where).First(&${beanVar}).Error
 
-	return &${beanVar}
+	return &${beanVar}, err
 }
 
 func Select${goModelGenerate@name}ByCondition(where *${goModelGenerate@name}) []${goModelGenerate@name} {
