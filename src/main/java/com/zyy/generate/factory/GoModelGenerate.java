@@ -17,7 +17,7 @@ public class GoModelGenerate implements Generate {
 
     @Override
     public String getName(BeanConfig beanConfig, String beanName) {
-        return beanName;
+        return "M" + beanName;
     }
 
     @Override

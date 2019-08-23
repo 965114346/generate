@@ -4,7 +4,7 @@ import com.zyy.generate.config.BeanConfig;
 import org.springframework.stereotype.Component;
 
 @Component
-public class goServiceGenerate implements Generate {
+public class GoServiceGenerate implements Generate {
 
     @Override
     public String getPackagePath(BeanConfig beanConfig) {
