@@ -2,7 +2,7 @@ package ${goModelGenerate@packagePath}
 
 import (
 	"fmt"
-	log "github.com/sirupsen/logrus"
+	logf "zebraKingdom/app_manage/log"
 	"zebraKingdom/app_manage/models"
 )
 
@@ -27,32 +27,33 @@ func (${goModelGenerate@name}) TableName() string {
 }
 
 func Select${goModelGenerate@name}ByPrimaryKey(primaryKey <#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>) *${goModelGenerate@name} {
-	log.Info(fmt.Sprintf("Select${goModelGenerate@name}ByPrimaryKey, param:%d", primaryKey))
+	logf.Req.Info(fmt.Sprintf("Select${goModelGenerate@name}ByPrimaryKey, param:%d", primaryKey))
 	var ${beanVar} ${goModelGenerate@name}
-	models.Db().Select(${beanVar}Column).First(&${beanVar}, primaryKey)
+
+    models.Db().Select(${beanVar}Column).First(&${beanVar}, primaryKey)
 	return &${beanVar}
 }
 
 func Select${goModelGenerate@name}One(where *${goModelGenerate@name}) *${goModelGenerate@name} {
-	log.Info(fmt.Sprintf("Select${goModelGenerate@name}One, param:%+v", *where))
+	logf.Req.Info(fmt.Sprintf("Select${goModelGenerate@name}One, param:%+v", *where))
 
 	var ${beanVar} ${goModelGenerate@name}
-	models.Db().Select(${beanVar}Column).Where(where).First(&${beanVar})
+    models.Db().Select(${beanVar}Column).Where(where).First(&${beanVar})
 
 	return &${beanVar}
 }
 
 func Select${goModelGenerate@name}ByCondition(where *${goModelGenerate@name}) []${goModelGenerate@name} {
-	log.Info(fmt.Sprintf("select${goModelGenerate@name}ByCondition, param:%+v", *where))
+	logf.Req.Info(fmt.Sprintf("select${goModelGenerate@name}ByCondition, param:%+v", *where))
 
     ${beanVar} := make([]${goModelGenerate@name}, 0)
-	models.Db().Select(${beanVar}Column).Where(where).Find(&${beanVar})
+    models.Db().Select(${beanVar}Column).Where(where).Find(&${beanVar})
 
     return ${beanVar}
 }
 
 func Select${goModelGenerate@name}ByPage(pageNo int, pageSize int, where *${goModelGenerate@name}) ([]${goModelGenerate@name}, int64) {
-	log.Info(fmt.Sprintf("Select${goModelGenerate@name}ByPage, pageNo:%d, pageSize:%d, param:%+v", pageNo, pageSize, *where))
+	logf.Req.Info(fmt.Sprintf("Select${goModelGenerate@name}ByPage, pageNo:%d, pageSize:%d, param:%+v", pageNo, pageSize, *where))
 	pageNum := (pageNo - 1) * pageSize
     if pageNum < 0 {
         pageNum = 0
@@ -75,16 +76,25 @@ func Select${goModelGenerate@name}ByPage(pageNo int, pageSize int, where *${goMo
 	return ${beanVar}, total
 }
 
+func (this *${goModelGenerate@name})Save${goModelGenerate@name}() error{
+    if this.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list> == 0{
+        logf.Req.Info(fmt.Sprintf("insert param:%v",this))
+    }else{
+        logf.Req.Info(fmt.Sprintf("update param:%v byId:%d",this,this.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list>))
+    }
+    return models.Db().Save(this).Error
+}
+
 func Insert${goModelGenerate@name}Selective(${beanVar} *${goModelGenerate@name}) *${goModelGenerate@name} {
-	log.Info(fmt.Sprintf("Insert${goModelGenerate@name}Selective, param:%+v", *${beanVar}))
+	logf.Req.Info(fmt.Sprintf("Insert${goModelGenerate@name}Selective, param:%+v", *${beanVar}))
 	models.Db().Create(${beanVar})
 	return ${beanVar}
 }
 
 func Update${goModelGenerate@name}ByPrimaryKey(${beanVar} *${goModelGenerate@name}) {
-	log.Info(fmt.Sprintf("Update${goModelGenerate@name}ByPrimaryKey, param:%+v", *${beanVar}))
+	logf.Req.Info(fmt.Sprintf("Update${goModelGenerate@name}ByPrimaryKey, param:%+v", *${beanVar}))
     if ${beanVar}.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list> == 0 {
-	    log.Info(fmt.Sprintf("primaryKey must not 0"))
+	    logf.Req.Info(fmt.Sprintf("primaryKey must not 0"))
         return
     }
 
@@ -96,12 +106,15 @@ func Update${goModelGenerate@name}ByPrimaryKey(${beanVar} *${goModelGenerate@nam
 	models.Db().Model(primary).Update(${beanVar})
 }
 
-func Delete${goModelGenerate@name}ByPrimaryKey(${beanVar} *${goModelGenerate@name}) {
-	log.Info(fmt.Sprintf("Delete${goModelGenerate@name}ByPrimaryKey, param:%+v", *${beanVar}))
+func (${beanVar} *${goModelGenerate@name})Delete${goModelGenerate@name}ByPrimaryKey() error {
+	logf.Req.Info(fmt.Sprintf("Delete${goModelGenerate@name}ByPrimaryKey, param:%+v", *${beanVar}))
 	if ${beanVar}.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list> == 0 {
-	    log.Infof(fmt.Sprintf("primaryKey must not 0"))
-        return
+	    logf.Req.Info(fmt.Sprintf("primaryKey must not 0"))
+        return nil
     }
 
-	models.Db().Delete(${beanVar})
+    primary := &${goModelGenerate@name}{
+        <#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list>:${beanVar}.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list>,
+	}
+	return models.Db().Delete(primary).Error
 }
