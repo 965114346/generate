@@ -4,15 +4,16 @@ import com.zyy.generate.config.BeanConfig;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GoModelGenerate implements Generate {
+public class goServiceGenerate implements Generate {
+
     @Override
     public String getPackagePath(BeanConfig beanConfig) {
-        return beanConfig.getDaoPackage();
+        return beanConfig.getServicePackage();
     }
 
     @Override
     public String getTemplateName() {
-        return "goModel.ftl";
+        return "goService.ftl";
     }
 
     @Override

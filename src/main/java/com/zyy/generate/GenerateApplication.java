@@ -53,8 +53,10 @@ public class GenerateApplication {
         config.setTableList(Arrays.asList(tableList));
         // 输出路径
         config.setOutput("output");
-        // 模块名
-        config.setModelName("user");
+        // dao
+        config.setDaoPackage("user");
+        // dao
+        config.setServicePackage("service");
 
         return config;
     }
