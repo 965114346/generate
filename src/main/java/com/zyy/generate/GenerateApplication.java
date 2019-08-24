@@ -47,7 +47,7 @@ public class GenerateApplication {
     public BeanConfig beanConfig() {
         BeanConfig config = new BeanConfig();
 
-        String[] tableList = {"sys_menu"};
+        String[] tableList = {"sys_template"};
 
         // 生成表
         config.setTableList(Arrays.asList(tableList));
@@ -57,12 +57,12 @@ public class GenerateApplication {
         // 输出路径
         config.setOutput("output");
         // 基础包
-        config.setBasePackage("com.zyy.taotao.rest");
+        config.setBasePackage("com.fh");
         // 模块名
         config.setModelName("");
 
         // bean包名，前后缀配置
-        config.setBeanPackage("pojo");
+        config.setBeanPackage("entity");
         config.setBeanNamePre("");
         config.setBeanNameSuf("");
 

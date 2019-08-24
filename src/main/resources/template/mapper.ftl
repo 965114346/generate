@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="${daoPackage}.${daoName}" >
+<mapper namespace="${daoGenerate@packagePath}.${beanGenerate@name}" >
 
-	<resultMap id="BaseResultMap" type="${beanPackage}.${beanName}" >
+	<resultMap id="BaseResultMap" type="${beanGenerate@packagePath}.${beanGenerate@name}" >
 		<#list columnList as beanField>
 		<#if beanField.columnKey == "PRI">
 		<id column="${beanField.columnName}" property="${beanField.name}" />
@@ -31,7 +31,7 @@
 	</select>
 
 	<!-- 条件查询${tableComment} -->
-	<select id="selectByCondition" resultMap="BaseResultMap" parameterType="${beanPackage}.${beanName}" >
+	<select id="selectByCondition" resultMap="BaseResultMap" parameterType="${beanGenerate@packagePath}.${beanGenerate@name}" >
 		select
 		<include refid="Base_Column_List" />
 		from ${tableName}
@@ -45,7 +45,7 @@
 	</select>
 
 	<!-- 插入${tableComment} -->
-	<insert id="insertSelective" parameterType="${beanPackage}.${beanName}" >
+	<insert id="insertSelective" parameterType="${beanGenerate@packagePath}.${beanGenerate@name}" >
 		<selectKey resultType="<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>" keyProperty="id" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
@@ -71,7 +71,7 @@
 	</insert>
 
 	<!-- 根据PrimaryKey更新${tableComment} -->
-	<update id="updateByPrimaryKey" parameterType="${beanPackage}.${beanName}" >
+	<update id="updateByPrimaryKey" parameterType="${beanGenerate@packagePath}.${beanGenerate@name}" >
 		update ${tableName}
 		<set >
 			<#list columnList as beanField>
