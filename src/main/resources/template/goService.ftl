@@ -9,6 +9,8 @@ type I${goModelGenerate@name}Service interface {
 
 	Select${goModelGenerate@name}ByCondition(where *${goModelGenerate@packagePath}.${goModelGenerate@name}) []${goModelGenerate@packagePath}.${goModelGenerate@name}
 
+	Select${goModelGenerate@name}One(where *${goModelGenerate@packagePath}.${goModelGenerate@name}) (*${goModelGenerate@packagePath}.${goModelGenerate@name}, error)
+
 	Select${goModelGenerate@name}ByPage(pageNo int, pageSize int, where *${goModelGenerate@packagePath}.${goModelGenerate@name}) ([]${goModelGenerate@packagePath}.${goModelGenerate@name}, int64)
 
 	Insert${goModelGenerate@name}Selective(${beanVar} *${goModelGenerate@packagePath}.${goModelGenerate@name}) *${goModelGenerate@packagePath}.${goModelGenerate@name}
@@ -27,6 +29,10 @@ func (service *${goModelGenerate@name}ServiceImpl) Select${goModelGenerate@name}
 
 func (service *${goModelGenerate@name}ServiceImpl) Select${goModelGenerate@name}ByCondition(where *${goModelGenerate@packagePath}.${goModelGenerate@name}) []${goModelGenerate@packagePath}.${goModelGenerate@name} {
 	return ${goModelGenerate@packagePath}.Select${goModelGenerate@name}ByCondition(where)
+}
+
+func (service *${goModelGenerate@name}ServiceImpl) Select${goModelGenerate@name}One(where *${goModelGenerate@packagePath}.${goModelGenerate@name}) (*${goModelGenerate@packagePath}.${goModelGenerate@name}, error) {
+	return ${goModelGenerate@packagePath}.Select${goModelGenerate@name}One(where)
 }
 
 func (service *${goModelGenerate@name}ServiceImpl) Select${goModelGenerate@name}ByPage(pageNo int, pageSize int, where *${goModelGenerate@packagePath}.${goModelGenerate@name}) ([]${goModelGenerate@packagePath}.${goModelGenerate@name}, int64) {
