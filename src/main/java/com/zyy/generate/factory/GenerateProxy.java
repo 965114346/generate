@@ -154,6 +154,7 @@ public class GenerateProxy {
         columnMapping.put("longtext", "string");
         columnMapping.put("mediumtext", "string");
         columnMapping.put("year", "int");
+        columnMapping.put("decimal", "float64");
     }
 
     private List<Column> getColumnList(String tableName) {
