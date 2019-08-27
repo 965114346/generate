@@ -15,7 +15,7 @@ type I${goModelGenerate@name}Service interface {
 
 	Insert${goModelGenerate@name}Selective(${beanVar} *${goModelGenerate@packagePath}.${goModelGenerate@name}) *${goModelGenerate@packagePath}.${goModelGenerate@name}
 
-	Update${goModelGenerate@name}ByPrimaryKey(${beanVar} *${goModelGenerate@packagePath}.${goModelGenerate@name})
+	Update${goModelGenerate@name}ByPrimaryKey(${beanVar} *${goModelGenerate@packagePath}.${goModelGenerate@name}) error
 
 	Delete${goModelGenerate@name}ByPrimaryKey(${beanVar} *${goModelGenerate@packagePath}.${goModelGenerate@name}) error
 }
@@ -43,8 +43,8 @@ func (service *${goModelGenerate@name}ServiceImpl) Insert${goModelGenerate@name}
 	return ${goModelGenerate@packagePath}.Insert${goModelGenerate@name}Selective(${beanVar})
 }
 
-func (service *${goModelGenerate@name}ServiceImpl) Update${goModelGenerate@name}ByPrimaryKey(${beanVar} *${goModelGenerate@packagePath}.${goModelGenerate@name}) {
-    ${goModelGenerate@packagePath}.Update${goModelGenerate@name}ByPrimaryKey(${beanVar})
+func (service *${goModelGenerate@name}ServiceImpl) Update${goModelGenerate@name}ByPrimaryKey(${beanVar} *${goModelGenerate@packagePath}.${goModelGenerate@name}) error {
+    return ${goModelGenerate@packagePath}.Update${goModelGenerate@name}ByPrimaryKey(${beanVar})
 }
 
 func (service *${goModelGenerate@name}ServiceImpl) Delete${goModelGenerate@name}ByPrimaryKey(${beanVar} *${goModelGenerate@packagePath}.${goModelGenerate@name}) error {

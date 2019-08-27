@@ -85,17 +85,21 @@ func (this *${goModelGenerate@name})Save${goModelGenerate@name}() error{
     return models.Db().Save(this).Error
 }
 
-func Insert${goModelGenerate@name}Selective(${beanVar} *${goModelGenerate@name}) *${goModelGenerate@name} {
+func Insert${goModelGenerate@name}Selective(${beanVar} *${goModelGenerate@name}) (*${goModelGenerate@name}, error) {
 	logf.Req.Info(fmt.Sprintf("Insert${goModelGenerate@name}Selective, param:%+v", *${beanVar}))
-	models.Db().Create(${beanVar})
-	return ${beanVar}
+
+    if err := models.Db().Create(${beanVar}).Error; err != nil {
+		return nil, err
+	}
+
+	return ${beanVar}, nil
 }
 
-func Update${goModelGenerate@name}ByPrimaryKey(${beanVar} *${goModelGenerate@name}) {
+func Update${goModelGenerate@name}ByPrimaryKey(${beanVar} *${goModelGenerate@name}) error {
 	logf.Req.Info(fmt.Sprintf("Update${goModelGenerate@name}ByPrimaryKey, param:%+v", *${beanVar}))
     if ${beanVar}.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list> == 0 {
 	    logf.Req.Info(fmt.Sprintf("primaryKey must not 0"))
-        return
+		return errors.New("primaryKey must not ")
     }
 
     primary := &${goModelGenerate@name}{
@@ -103,7 +107,7 @@ func Update${goModelGenerate@name}ByPrimaryKey(${beanVar} *${goModelGenerate@nam
 	}
 
     ${beanVar}.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list> = 0
-	models.Db().Model(primary).Update(${beanVar})
+	return models.Db().Model(primary).Update(${beanVar}).Error
 }
 
 func (${beanVar} *${goModelGenerate@name})Delete${goModelGenerate@name}ByPrimaryKey() error {
