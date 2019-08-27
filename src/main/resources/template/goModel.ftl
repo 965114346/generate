@@ -115,7 +115,7 @@ func (${beanVar} *${goModelGenerate@name})Delete${goModelGenerate@name}ByPrimary
 	logf.Req.Info(fmt.Sprintf("Delete${goModelGenerate@name}ByPrimaryKey, param:%+v", *${beanVar}))
 	if ${beanVar}.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list> == 0 {
 	    logf.Req.Info(fmt.Sprintf("primaryKey must not 0"))
-        return nil
+		return errors.New("primaryKey must not 0")
     }
 
     primary := &${goModelGenerate@name}{
