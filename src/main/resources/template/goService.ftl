@@ -13,7 +13,7 @@ type I${goModelGenerate@name}Service interface {
 
 	Select${goModelGenerate@name}ByPage(pageNo int, pageSize int, where *${goModelGenerate@packagePath}.${goModelGenerate@name}) ([]${goModelGenerate@packagePath}.${goModelGenerate@name}, int64)
 
-	Insert${goModelGenerate@name}Selective(${beanVar} *${goModelGenerate@packagePath}.${goModelGenerate@name}) *${goModelGenerate@packagePath}.${goModelGenerate@name}
+	Insert${goModelGenerate@name}Selective(${beanVar} *${goModelGenerate@packagePath}.${goModelGenerate@name}) (*${goModelGenerate@packagePath}.${goModelGenerate@name}, error)
 
 	Update${goModelGenerate@name}ByPrimaryKey(${beanVar} *${goModelGenerate@packagePath}.${goModelGenerate@name}) error
 
@@ -39,7 +39,7 @@ func (service *${goModelGenerate@name}ServiceImpl) Select${goModelGenerate@name}
 	return ${goModelGenerate@packagePath}.Select${goModelGenerate@name}ByPage(pageNo, pageSize, where)
 }
 
-func (service *${goModelGenerate@name}ServiceImpl) Insert${goModelGenerate@name}Selective(${beanVar} *${goModelGenerate@packagePath}.${goModelGenerate@name}) *${goModelGenerate@packagePath}.${goModelGenerate@name} {
+func (service *${goModelGenerate@name}ServiceImpl) Insert${goModelGenerate@name}Selective(${beanVar} *${goModelGenerate@packagePath}.${goModelGenerate@name}) (*${goModelGenerate@packagePath}.${goModelGenerate@name}, error) {
 	return ${goModelGenerate@packagePath}.Insert${goModelGenerate@name}Selective(${beanVar})
 }
 

@@ -100,7 +100,7 @@ func Update${goModelGenerate@name}ByPrimaryKey(${beanVar} *${goModelGenerate@nam
 	logf.Req.Info(fmt.Sprintf("Update${goModelGenerate@name}ByPrimaryKey, param:%+v", *${beanVar}))
     if ${beanVar}.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list> == 0 {
 	    logf.Req.Info(fmt.Sprintf("primaryKey must not 0"))
-		return errors.New("primaryKey must not ")
+		return errors.New("primaryKey must not 0")
     }
 
     primary := &${goModelGenerate@name}{
