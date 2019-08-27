@@ -1,6 +1,7 @@
 package ${goModelGenerate@packagePath}
 
 import (
+	"errors"
 	"fmt"
 	logf "zebraKingdom/app_manage/log"
 	"zebraKingdom/app_manage/models"
