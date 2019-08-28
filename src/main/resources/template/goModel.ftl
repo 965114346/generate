@@ -71,7 +71,7 @@ func Select${goModelGenerate@name}ByPage(pageNo int, pageSize int, where *${goMo
     ${beanVar} := make([]${goModelGenerate@name}, pageSize)
 
 	// 获取总条数
-	models.Db().Model(&${goModelGenerate@name}{}).Count(&total)
+	models.Db().Model(&${goModelGenerate@name}{}).Where(where).Count(&total)
 	// 分页查询
 	models.Db().Select(${beanVar}Column).Limit(pageSize).Offset(pageNum).Where(where).Find(&${beanVar})
 	return ${beanVar}, total
