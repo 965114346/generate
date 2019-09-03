@@ -144,7 +144,7 @@ public class GenerateProxy {
 
     static {
         columnMapping.put("int", "int64");
-        columnMapping.put("bigint", "int64");
+        columnMapping.put("bigint", "uint64");
         columnMapping.put("tinyint", "int");
         columnMapping.put("date", "string");
         columnMapping.put("datetime", "models.TimeString");
