@@ -2,7 +2,7 @@ package com.zyy.generate;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.zyy.generate.config.BeanConfig;
-import com.zyy.generate.factory.GenerateProxy;
+import com.zyy.generate.core.GenerateProxy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

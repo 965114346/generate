@@ -50,5 +50,4 @@
         <property name="templateLoader" ref="multiTemplateLoader"/>
     </bean>
 
-    <!-- 包，名称生成配置 -->
 </beans>

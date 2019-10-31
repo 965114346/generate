@@ -1,4 +1,4 @@
-package com.zyy.generate.factory;
+package com.zyy.generate.core;
 
 import com.zyy.generate.config.BeanConfig;
 import com.zyy.generate.dao.GenerateMapper;

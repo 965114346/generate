@@ -1,6 +1,7 @@
-package com.zyy.generate.factory;
+package com.zyy.generate.custom;
 
 import com.zyy.generate.config.BeanConfig;
+import com.zyy.generate.core.Generate;
 import com.zyy.generate.util.StrUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;

@@ -1,29 +1,29 @@
-package com.zyy.generate.factory;
+package com.zyy.generate.custom;
 
 import com.zyy.generate.config.BeanConfig;
-import com.zyy.generate.util.StrUtils;
+import com.zyy.generate.core.Generate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ServiceImplGenerate implements Generate {
+public class MapperGenerate implements Generate {
     @Override
     public String getPackagePath(BeanConfig beanConfig) {
-        return StrUtils.getPackagePath(beanConfig.getServiceImplPackage(), beanConfig);
+        return beanConfig.getMapperPackage();
     }
 
     @Override
     public String getTemplateName() {
-        return "serviceImpl.ftl";
+        return "mapper.ftl";
     }
 
     @Override
     public String getName(BeanConfig beanConfig, String beanName) {
-        return StringUtils.join(beanConfig.getServiceImplNamePre(), beanName, beanConfig.getServiceImplNameSuf());
+        return StringUtils.join(beanConfig.getDaoNamePre(), beanName, beanConfig.getDaoNameSuf());
     }
 
     @Override
     public String getFileType() {
-        return "java";
+        return "xml";
     }
 }
