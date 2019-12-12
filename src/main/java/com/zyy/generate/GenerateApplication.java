@@ -29,7 +29,7 @@ public class GenerateApplication {
     @Value("root")
     private String user;
 
-    @Value("root")
+    @Value("232511")
     private String password;
 
     public static void main(String[] args) {
@@ -47,7 +47,7 @@ public class GenerateApplication {
     public BeanConfig beanConfig() {
         BeanConfig config = new BeanConfig();
 
-        String[] tableList = {"sys_template"};
+        String[] tableList = {"sys_menu"};
 
         // 生成表
         config.setTableList(Arrays.asList(tableList));
@@ -57,12 +57,12 @@ public class GenerateApplication {
         // 输出路径
         config.setOutput("output");
         // 基础包
-        config.setBasePackage("com.fh");
+        config.setBasePackage("com.zyy.lemon");
         // 模块名
         config.setModelName("");
 
         // bean包名，前后缀配置
-        config.setBeanPackage("entity");
+        config.setBeanPackage("pojo");
         config.setBeanNamePre("");
         config.setBeanNameSuf("");
 
