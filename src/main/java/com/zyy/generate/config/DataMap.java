@@ -1,20 +1,37 @@
 package com.zyy.generate.config;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author yangyang.zhang
  * @date 2019/3/31 16:18
  */
 @Data
-public class BeanConfig {
+public class DataMap {
 
     /**
      * 作者
      */
     private String author;
+
+    /**
+     * 文件输出
+     */
+    private String output;
+
+    /**
+     * 表名称列表
+     */
+    private List<String> tableList;
+
+    /**
+     * 组
+     */
+    private Map<String, List<JSONObject>> groups;
 
     /**
      * 模块名
@@ -105,14 +122,4 @@ public class BeanConfig {
      * Controller名称后缀
      */
     private String controllerNameSuf;
-
-    /**
-     * 文件输出
-     */
-    private String output;
-
-    /**
-     * 表名称列表
-     */
-    private List<String> tableList;
 }

@@ -1,6 +1,6 @@
 package com.zyy.generate.custom;
 
-import com.zyy.generate.config.BeanConfig;
+import com.zyy.generate.config.DataMap;
 import com.zyy.generate.core.Generate;
 import com.zyy.generate.util.StrUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,12 +19,12 @@ public class DaoGenerate implements Generate {
     }
 
     @Override
-    public String getPackagePath(BeanConfig beanConfig) {
+    public String getPackagePath(DataMap beanConfig) {
         return StrUtils.getPackagePath(beanConfig.getDaoPackage(), beanConfig);
     }
 
     @Override
-    public String getName(BeanConfig beanConfig, String beanName) {
+    public String getName(DataMap beanConfig, String beanName) {
         return StringUtils.join(beanConfig.getDaoNamePre(), beanName, beanConfig.getDaoNameSuf());
     }
 

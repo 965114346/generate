@@ -1,6 +1,6 @@
 package com.zyy.generate.core;
 
-import com.zyy.generate.config.BeanConfig;
+import com.zyy.generate.config.DataMap;
 import com.zyy.generate.dao.GenerateMapper;
 import com.zyy.generate.pojo.Column;
 import com.zyy.generate.pojo.Table;
@@ -37,7 +37,7 @@ public class GenerateProxy {
     private Configuration configuration;
 
     @Autowired
-    private BeanConfig beanConfig;
+    private DataMap beanConfig;
 
     public void generate() {
         Map<String, Generate> generateMap = generateFactoryBean.getGenerateMap();

@@ -1,15 +1,21 @@
 package com.zyy.generate;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.zyy.generate.config.BeanConfig;
+import com.zyy.generate.config.ApplicationConfig;
+import com.zyy.generate.config.DataMap;
+import com.zyy.generate.core.DefaultModel;
 import com.zyy.generate.core.GenerateProxy;
+import com.zyy.generate.core.Model;
+import com.zyy.generate.core.java.JavaClassModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -20,22 +26,14 @@ import java.util.Arrays;
 @Configuration
 public class GenerateApplication {
 
-    @Value("com.mysql.jdbc.Driver")
-    private String driverClass;
-
-    @Value("jdbc:mysql:///web3?useUnicode=true&characterEncoding=utf8&useSSL=false")
-    private String jdbcUrl;
-
-    @Value("root")
-    private String user;
-
-    @Value("232511")
-    private String password;
-
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/application.xml");
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext.register(ApplicationConfig.class);
         GenerateProxy bean = applicationContext.getBean(GenerateProxy.class);
         bean.generate();
+
+        ArrayList<Object> objects = new ArrayList<>();
+        new JavaClassModel("com.zyy.pojo", "mapper");
         applicationContext.close();
     }
 
@@ -44,8 +42,8 @@ public class GenerateApplication {
      * @return 配置类
      */
     @Bean
-    public BeanConfig beanConfig() {
-        BeanConfig config = new BeanConfig();
+    public DataMap beanConfig() {
+        DataMap config = new DataMap();
 
         String[] tableList = {"sys_menu"};
 
@@ -90,15 +88,5 @@ public class GenerateApplication {
         config.setMapperPackage("mapper");
 
         return config;
-    }
-
-    @Bean
-    public DataSource dataSource() throws Exception {
-        ComboPooledDataSource dataSource = new ComboPooledDataSource();
-        dataSource.setDriverClass(driverClass);
-        dataSource.setJdbcUrl(jdbcUrl);
-        dataSource.setUser(user);
-        dataSource.setPassword(password);
-        return dataSource;
     }
 }

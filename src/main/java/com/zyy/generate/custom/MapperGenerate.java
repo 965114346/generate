@@ -1,6 +1,6 @@
 package com.zyy.generate.custom;
 
-import com.zyy.generate.config.BeanConfig;
+import com.zyy.generate.config.DataMap;
 import com.zyy.generate.core.Generate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MapperGenerate implements Generate {
     @Override
-    public String getPackagePath(BeanConfig beanConfig) {
+    public String getPackagePath(DataMap beanConfig) {
         return beanConfig.getMapperPackage();
     }
 
@@ -18,7 +18,7 @@ public class MapperGenerate implements Generate {
     }
 
     @Override
-    public String getName(BeanConfig beanConfig, String beanName) {
+    public String getName(DataMap beanConfig, String beanName) {
         return StringUtils.join(beanConfig.getDaoNamePre(), beanName, beanConfig.getDaoNameSuf());
     }
 
