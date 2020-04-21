@@ -32,8 +32,13 @@ public class GenerateApplication {
         GenerateProxy bean = applicationContext.getBean(GenerateProxy.class);
         bean.generate();
 
-        ArrayList<Object> objects = new ArrayList<>();
+        ArrayList<Model> objects = new ArrayList<>();
         new JavaClassModel("com.zyy.pojo", "mapper");
+
+        DataMap dataMap = new DataMap();
+        dataMap.setModelList(objects);
+
+
         applicationContext.close();
     }
 

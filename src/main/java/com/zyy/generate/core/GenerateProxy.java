@@ -48,7 +48,7 @@ public class GenerateProxy {
         for (String tableName : tableList) {
             List<Column> columnList = getColumnList(tableName);
             Table table = generateDao.queryTable(tableName);
-            String tableComment = table.getTableComment();
+            String tableComment = table.getComment();
             log.info("======================>> tableComment: {}", tableComment);
             log.info("======================>> columnList  : {}", columnList);
 
@@ -165,13 +165,13 @@ public class GenerateProxy {
         for (Column column: columnList) {
             log.info("column: {}", column);
             // java变量名称驼峰命名
-            column.setName(StrUtils.str2hump(column.getColumnName()));
+            column.setName(StrUtils.str2hump(column.getName()));
             column.setFirstWordUpperCase(StringUtils.capitalize(column.getName()));
 
             Class<?> aClass = columnMapping.get(column.getDataType());
             if (Objects.isNull(aClass)) {
                 log.error("            表名: {}", tableName);
-                log.error("        字段名称: {}", column.getColumnName());
+                log.error("        字段名称: {}", column.getName());
                 log.error("未匹配到映射类型: {}", column.getDataType());
                 throw new RuntimeException();
             }

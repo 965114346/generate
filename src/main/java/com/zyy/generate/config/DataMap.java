@@ -1,6 +1,7 @@
 package com.zyy.generate.config;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zyy.generate.core.Model;
 import lombok.Data;
 
 import java.util.List;
@@ -27,6 +28,8 @@ public class DataMap {
      * 表名称列表
      */
     private List<String> tableList;
+
+    private List<Model> modelList;
 
     /**
      * 组

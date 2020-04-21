@@ -24,7 +24,7 @@ public class Table {
     /**
      * 表名称
      */
-    private String tableName;
+    private String name;
 
     /**
      * 表类型[system view|base table]
@@ -114,10 +114,7 @@ public class Table {
     /**
      * 表的注释、备注
      */
-    private String tableComment;
+    private String comment;
 
-    /**
-     * 字段列表
-     */
     private List<Column> columnList;
 }

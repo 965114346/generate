@@ -9,6 +9,26 @@ import lombok.Data;
 public class Column {
 
     /**
+     * 列名
+     */
+    private String name;
+
+    /**
+     * 驼峰名称
+     */
+    private String humpName;
+
+    /**
+     * 大写名称
+     */
+    private String upperCaseName;
+
+    /**
+     * 无下划线大写名称
+     */
+    private String noUnderlineUpperCaseName;
+
+    /**
      * 表限定符
      */
     private String tableCatalog;
@@ -22,11 +42,6 @@ public class Column {
      * 表名
      */
     private String tableName;
-
-    /**
-     * 列名
-     */
-    private String columnName;
 
     /**
      * 列标识号
@@ -125,30 +140,10 @@ public class Column {
     /**
      * 字段注释
      */
-    private String columnComment;
+    private String comment;
 
     /**
      * 组合字段的公式
      */
     private String generationExpressic;
-
-    /**
-     * java字段名称
-     */
-    private String name;
-
-    /**
-     * 首字母大写名称
-     */
-    private String firstWordUpperCase;
-
-    /**
-     * java字段类型
-     */
-    private String className;
-
-    /**
-     * the simple name of the underlying class
-     */
-    private String classSimpleName;
 }
