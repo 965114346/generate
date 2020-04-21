@@ -1,10 +1,7 @@
-package ${goModelGenerate@packagePath}
+package models
 
 import (
-	"errors"
-	"fmt"
-	logf "zebraKingdom/app_manage/log"
-	"zebraKingdom/app_manage/models"
+    "github.com/jinzhu/gorm"
 )
 
 type ${goModelGenerate@name} struct {
@@ -13,113 +10,97 @@ type ${goModelGenerate@name} struct {
     // ${column.columnComment}
     </#if>
     <#if column.columnKey == "PRI">
-    ${column.firstWordUpperCase} ${column.classSimpleName} `gorm:"primary_key" gorm:"column:${column.columnName}"`
+    ${column.firstWordUpperCase} ${column.classSimpleName} `json:"${column.columnName}" gorm:"primary_key" gorm:"column:${column.columnName}"`
     <#else >
-    ${column.firstWordUpperCase} ${column.classSimpleName} `gorm:"column:${column.columnName}"`
+    ${column.firstWordUpperCase} ${column.classSimpleName} `json:"${column.columnName}" gorm:"column:${column.columnName}"`
     </#if>
 </#list>
 }
-
-var ${beanVar}Column = "<#list columnList as beanField>`${beanField.columnName}`<#if beanField_has_next>, </#if></#list>"
+<#--var ${beanVar}Column = "<#list columnList as beanField>`${beanField.columnName}`<#if beanField_has_next>, </#if></#list>"-->
 
 // 设置${goModelGenerate@name}的表名为`${tableName}`
 func (${goModelGenerate@name}) TableName() string {
 	return "${tableName}"
 }
 
-func Select${goModelGenerate@name}ByPrimaryKey(primaryKey <#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>) (*${goModelGenerate@name}, error) {
-	logf.Req.Info(fmt.Sprintf("Select${goModelGenerate@name}ByPrimaryKey, param:%d", primaryKey))
-	var ${beanVar} ${goModelGenerate@name}
-
-    err := models.Db().Select(${beanVar}Column).First(&${beanVar}, primaryKey).Error
-	return &${beanVar}, err
-}
-
-func Select${goModelGenerate@name}One(where *${goModelGenerate@name}) (*${goModelGenerate@name}, error) {
-	logf.Req.Info(fmt.Sprintf("Select${goModelGenerate@name}One, param:%+v", *where))
-
-	var ${beanVar} ${goModelGenerate@name}
-    err := models.Db().Select(${beanVar}Column).Where(where).First(&${beanVar}).Error
-
-	return &${beanVar}, err
-}
-
-func Select${goModelGenerate@name}ByCondition(where *${goModelGenerate@name}) []${goModelGenerate@name} {
-	logf.Req.Info(fmt.Sprintf("select${goModelGenerate@name}ByCondition, param:%+v", *where))
-
-    ${beanVar} := make([]${goModelGenerate@name}, 0)
-    models.Db().Select(${beanVar}Column).Where(where).Find(&${beanVar})
-
-    return ${beanVar}
-}
-
-func Select${goModelGenerate@name}ByPage(pageNo int, pageSize int, where *${goModelGenerate@name}) ([]${goModelGenerate@name}, int64) {
-	logf.Req.Info(fmt.Sprintf("Select${goModelGenerate@name}ByPage, pageNo:%d, pageSize:%d, param:%+v", pageNo, pageSize, *where))
-	pageNum := (pageNo - 1) * pageSize
-    if pageNum < 0 {
-        pageNum = 0
+// Exist${goModelGenerate@name}ByID checks if an ${beanVar} exists based on ID
+func Exist${goModelGenerate@name}ByID(id <#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>) (bool, error) {
+    var ${beanVar} ${goModelGenerate@name}
+    err := db.Select("<#list columnList as column><#if column.columnKey == "PRI">${column.columnName}</#if></#list>").Where("<#list columnList as column><#if column.columnKey == "PRI">${column.columnName}</#if></#list> = ? ", id).First(&${beanVar}).Error
+    if err != nil && err != gorm.ErrRecordNotFound {
+        return false, err
     }
 
-    if pageSize < 10 {
-        pageSize = 10
-    }
-    if pageSize > 200 {
-        pageSize = 200
+    if ${beanVar}.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list> > 0 {
+        return true, nil
     }
 
-	var total int64
-    ${beanVar} := make([]${goModelGenerate@name}, pageSize)
-
-	// 获取总条数
-	models.Db().Model(&${goModelGenerate@name}{}).Where(where).Count(&total)
-	// 分页查询
-	models.Db().Select(${beanVar}Column).Limit(pageSize).Offset(pageNum).Where(where).Find(&${beanVar})
-	return ${beanVar}, total
+    return false, nil
 }
 
-func (this *${goModelGenerate@name})Save${goModelGenerate@name}() error{
-    if this.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list> == 0{
-        logf.Req.Info(fmt.Sprintf("insert param:%v",this))
-    }else{
-        logf.Req.Info(fmt.Sprintf("update param:%v byId:%d",this,this.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list>))
-    }
-    return models.Db().Save(this).Error
-}
-
-func Insert${goModelGenerate@name}Selective(${beanVar} *${goModelGenerate@name}) (*${goModelGenerate@name}, error) {
-	logf.Req.Info(fmt.Sprintf("Insert${goModelGenerate@name}Selective, param:%+v", *${beanVar}))
-
-    if err := models.Db().Create(${beanVar}).Error; err != nil {
-		return nil, err
-	}
-
-	return ${beanVar}, nil
-}
-
-func Update${goModelGenerate@name}ByPrimaryKey(${beanVar} *${goModelGenerate@name}) error {
-	logf.Req.Info(fmt.Sprintf("Update${goModelGenerate@name}ByPrimaryKey, param:%+v", *${beanVar}))
-    if ${beanVar}.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list> == 0 {
-	    logf.Req.Info(fmt.Sprintf("primaryKey must not 0"))
-		return errors.New("primaryKey must not 0")
+// Get${goModelGenerate@name}Total gets the total number of ${beanVar}s based on the constraints
+func Get${goModelGenerate@name}Total(maps interface{}) (int, error) {
+    var count int
+    if err := db.Model(&${goModelGenerate@name}{}).Where(maps).Count(&count).Error; err != nil {
+        return 0, err
     }
 
-    primary := &${goModelGenerate@name}{
-        <#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list>:${beanVar}.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list>,
-	}
-
-    ${beanVar}.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list> = 0
-	return models.Db().Model(primary).Update(${beanVar}).Error
+    return count, nil
 }
 
-func (${beanVar} *${goModelGenerate@name})Delete${goModelGenerate@name}ByPrimaryKey() error {
-	logf.Req.Info(fmt.Sprintf("Delete${goModelGenerate@name}ByPrimaryKey, param:%+v", *${beanVar}))
-	if ${beanVar}.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list> == 0 {
-	    logf.Req.Info(fmt.Sprintf("primaryKey must not 0"))
-		return errors.New("primaryKey must not 0")
+// Get${goModelGenerate@name}s gets a list of ${beanVar}s based on paging constraints
+func Get${goModelGenerate@name}s(pageNum int, pageSize int, maps interface{}) ([]*${goModelGenerate@name}, error) {
+    var ${beanVar}s []*${goModelGenerate@name}
+    err := db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&${beanVar}s).Error
+    if err != nil && err != gorm.ErrRecordNotFound {
+        return nil, err
     }
 
-    primary := &${goModelGenerate@name}{
-        <#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list>:${beanVar}.<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.firstWordUpperCase}</#if></#list>,
-	}
-	return models.Db().Delete(primary).Error
+    return ${beanVar}s, nil
+}
+
+// Get${goModelGenerate@name} Get a single ${beanVar} based on ID
+func Get${goModelGenerate@name}(id <#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>) (*${goModelGenerate@name}, error) {
+    var ${beanVar} ${goModelGenerate@name}
+    err := db.Where("<#list columnList as column><#if column.columnKey == "PRI">${column.columnName}</#if></#list> = ?", id).First(&${beanVar}).Error
+    if err != nil && err != gorm.ErrRecordNotFound {
+        return nil, err
+    }
+
+    return &${beanVar}, nil
+}
+
+// Edit${goModelGenerate@name} modify a single ${beanVar}
+func Edit${goModelGenerate@name}(id <#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>, data interface{}) error {
+    if err := db.Model(&${goModelGenerate@name}{}).Where("<#list columnList as column><#if column.columnKey == "PRI">${column.columnName}</#if></#list> = ?", id).Updates(data).Error; err != nil {
+        return err
+    }
+
+    return nil
+}
+
+// Add${goModelGenerate@name} add a single ${beanVar}
+func Add${goModelGenerate@name}(data map[string]interface{}) error {
+    ${beanVar} := ${goModelGenerate@name}{
+    <#list columnList as column>
+    <#if column.columnKey == "PRI">
+    <#else >
+        ${column.firstWordUpperCase}: data["${column.columnName}"].(${column.classSimpleName}),
+    </#if>
+    </#list>
+    }
+    if err := db.Create(&${beanVar}).Error; err != nil {
+        return err
+    }
+
+    return nil
+}
+
+// Delete${goModelGenerate@name} delete a single ${beanVar}
+func Delete${goModelGenerate@name}(id <#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.className}</#if></#list>) error {
+    if err := db.Where("<#list columnList as column><#if column.columnKey == "PRI">${column.columnName}</#if></#list> = ?", id).Delete(${goModelGenerate@name}{}).Error; err != nil {
+        return err
+    }
+
+    return nil
 }

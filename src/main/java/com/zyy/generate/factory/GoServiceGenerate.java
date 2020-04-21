@@ -3,7 +3,7 @@ package com.zyy.generate.factory;
 import com.zyy.generate.config.BeanConfig;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class GoServiceGenerate implements Generate {
 
     @Override

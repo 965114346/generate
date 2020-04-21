@@ -3,6 +3,9 @@ package com.zyy.generate.factory;
 import com.zyy.generate.config.BeanConfig;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author yangyang
+ */
 @Component
 public class GoModelGenerate implements Generate {
     @Override
@@ -17,7 +20,7 @@ public class GoModelGenerate implements Generate {
 
     @Override
     public String getName(BeanConfig beanConfig, String beanName) {
-        return "M" + beanName;
+        return beanName;
     }
 
     @Override

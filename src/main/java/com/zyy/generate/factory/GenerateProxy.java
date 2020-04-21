@@ -52,8 +52,8 @@ public class GenerateProxy {
             log.info("======================>> columnList  : {}", columnList);
 
             // 截取第一个下划线后的字符串   adv_picture  <--  rcg_adv_picture
-            String entity = StringUtils.substringAfter(tableName, "_");
-            //String entity = tableName;
+            //String entity = StringUtils.substringAfter(tableName, "_");
+            String entity = tableName;
             // advPicture  <--  adv_picture
             String beanVar = StrUtils.str2hump(entity);
             // 类名驼峰命名  AdvPicture  <-- adv_picture
@@ -144,16 +144,17 @@ public class GenerateProxy {
 
     static {
         columnMapping.put("int", "int64");
-        columnMapping.put("bigint", "uint64");
+        columnMapping.put("bigint", "int64");
         columnMapping.put("tinyint", "int");
         columnMapping.put("date", "string");
-        columnMapping.put("datetime", "models.TimeString");
+        columnMapping.put("datetime", "int64");
         columnMapping.put("varchar", "string");
         columnMapping.put("char", "string");
         columnMapping.put("text", "string");
         columnMapping.put("longtext", "string");
         columnMapping.put("mediumtext", "string");
         columnMapping.put("year", "int");
+        columnMapping.put("smallint", "int");
     }
 
     private List<Column> getColumnList(String tableName) {

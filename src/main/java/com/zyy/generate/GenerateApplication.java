@@ -23,13 +23,13 @@ public class GenerateApplication {
     @Value("com.mysql.jdbc.Driver")
     private String driverClass;
 
-    @Value("jdbc:mysql:///zebra?useUnicode=true&characterEncoding=utf8&useSSL=false")
+    @Value("jdbc:mysql://111.230.48.104:3307/quick_pass?useUnicode=true&characterEncoding=utf8&useSSL=false")
     private String jdbcUrl;
 
     @Value("root")
     private String user;
 
-    @Value("root")
+    @Value("965114")
     private String password;
 
     public static void main(String[] args) {
@@ -47,7 +47,7 @@ public class GenerateApplication {
     public BeanConfig beanConfig() {
         BeanConfig config = new BeanConfig();
 
-        String[] tableList = {"t_user_invitation", "t_user_base"};
+        String[] tableList = {"acceptor", "merchant", "user"};
 
         // 生成表
         config.setTableList(Arrays.asList(tableList));
@@ -68,6 +68,7 @@ public class GenerateApplication {
         dataSource.setJdbcUrl(jdbcUrl);
         dataSource.setUser(user);
         dataSource.setPassword(password);
+        dataSource.setMaxPoolSize(3);
         return dataSource;
     }
 }
