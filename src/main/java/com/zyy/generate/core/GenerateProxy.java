@@ -40,8 +40,8 @@ public class GenerateProxy {
     private DataMap beanConfig;
 
     public void generate() {
-        Map<String, Generate> generateMap = generateFactoryBean.getGenerateMap();
-        List<Generate> generateList = generateMap.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList());
+        Map<String, Generator> generateMap = generateFactoryBean.getGenerateMap();
+        List<Generator> generateList = generateMap.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList());
 
         List<String> tableList = beanConfig.getTableList();
 
@@ -61,10 +61,10 @@ public class GenerateProxy {
             String bean = StringUtils.capitalize(beanVar);
 
             List<BaseGenerate> list = new ArrayList<>();
-            Set<Map.Entry<String, Generate>> entrySet = generateMap.entrySet();
-            for (Map.Entry<String, Generate> entry : entrySet) {
+            Set<Map.Entry<String, Generator>> entrySet = generateMap.entrySet();
+            for (Map.Entry<String, Generator> entry : entrySet) {
                 String key = entry.getKey();
-                Generate generate = entry.getValue();
+                Generator generate = entry.getValue();
 
                 BaseGenerate baseGenerate = new BaseGenerate();
                 baseGenerate.setPackagePath(generate.getPackagePath(beanConfig));
@@ -92,7 +92,7 @@ public class GenerateProxy {
             }
 
             log.info("dataMap: {}", dataMap);
-            for (Generate generate : generateList) {
+            for (Generator generate : generateList) {
                 generate(generate.getTemplateName(),
                         dataMap,
                         generate.getName(beanConfig, bean),

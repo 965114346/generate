@@ -1,13 +1,13 @@
 package com.zyy.generate.custom;
 
 import com.zyy.generate.config.DataMap;
-import com.zyy.generate.core.Generate;
+import com.zyy.generate.core.Generator;
 import com.zyy.generate.util.StrUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ServiceImplGenerate implements Generate {
+public class ServiceImplGenerator implements Generator {
     @Override
     public String getPackagePath(DataMap beanConfig) {
         return StrUtils.getPackagePath(beanConfig.getServiceImplPackage(), beanConfig);

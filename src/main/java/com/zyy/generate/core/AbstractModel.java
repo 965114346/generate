@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
  * @author yangyang
  */
 @Setter
-public abstract class AbstractModel implements Model {
+public abstract class AbstractModel implements AbstractStrategy {
 
     protected String path;
 

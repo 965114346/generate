@@ -1,7 +1,7 @@
 package com.zyy.generate.core.java;
 
 import com.zyy.generate.core.AbstractModel;
-import com.zyy.generate.core.Model;
+import com.zyy.generate.core.AbstractStrategy;
 import com.zyy.generate.pojo.Table;
 import org.apache.commons.lang3.StringUtils;
 
@@ -43,6 +43,6 @@ public class JavaClassModel extends AbstractModel {
 
     @Override
     public String getFileType() {
-        return Model.JAVA_TYPE;
+        return AbstractStrategy.JAVA_TYPE;
     }
 }

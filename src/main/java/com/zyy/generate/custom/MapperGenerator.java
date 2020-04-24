@@ -1,31 +1,29 @@
 package com.zyy.generate.custom;
 
 import com.zyy.generate.config.DataMap;
-import com.zyy.generate.core.Generate;
-import com.zyy.generate.util.StrUtils;
+import com.zyy.generate.core.Generator;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ServiceGenerate implements Generate {
-
+public class MapperGenerator implements Generator {
     @Override
     public String getPackagePath(DataMap beanConfig) {
-        return StrUtils.getPackagePath(beanConfig.getServicePackage(), beanConfig);
+        return beanConfig.getMapperPackage();
     }
 
     @Override
     public String getTemplateName() {
-        return "service.ftl";
+        return "mapper.ftl";
     }
 
     @Override
     public String getName(DataMap beanConfig, String beanName) {
-        return StringUtils.join(beanConfig.getServiceNamePre(), beanName, beanConfig.getServiceNameSuf());
+        return StringUtils.join(beanConfig.getDaoNamePre(), beanName, beanConfig.getDaoNameSuf());
     }
 
     @Override
     public String getFileType() {
-        return "java";
+        return "xml";
     }
 }

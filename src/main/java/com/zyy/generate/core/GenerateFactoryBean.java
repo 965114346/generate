@@ -19,11 +19,11 @@ public class GenerateFactoryBean {
     @Autowired
     private ApplicationContext applicationContext;
 
-    private Map<String, Generate> generateMap = new HashMap<>();
+    private Map<String, Generator> generateMap = new HashMap<>();
 
     @PostConstruct
     public void init() {
-        this.generateMap = applicationContext.getBeansOfType(Generate.class);
+        this.generateMap = applicationContext.getBeansOfType(Generator.class);
     }
 
     /**
@@ -31,11 +31,11 @@ public class GenerateFactoryBean {
      * @param generateName 生成器bean名称
      * @return 对应bean的生成器
      */
-    public Generate getGenerate(String generateName) {
+    public Generator getGenerate(String generateName) {
         return generateMap.get(generateName);
     }
 
-    public Map<String, Generate> getGenerateMap() {
+    public Map<String, Generator> getGenerateMap() {
         return generateMap;
     }
 }

@@ -1,20 +1,15 @@
 package com.zyy.generate;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.zyy.generate.config.ApplicationConfig;
 import com.zyy.generate.config.DataMap;
-import com.zyy.generate.core.DefaultModel;
-import com.zyy.generate.core.GenerateProxy;
-import com.zyy.generate.core.Model;
+import com.zyy.generate.core.*;
 import com.zyy.generate.core.java.JavaClassModel;
+import com.zyy.generate.custom.DaoGenerator;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -27,12 +22,15 @@ import java.util.Arrays;
 public class GenerateApplication {
 
     public static void main(String[] args) {
+        GeneratorSubject proxy = new GeneratorProxy();
+        proxy.registerGenerator(new DefaultGenerator("dao").setPathStrategy(""));
+        proxy.notifyGenerators();
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
         applicationContext.register(ApplicationConfig.class);
         GenerateProxy bean = applicationContext.getBean(GenerateProxy.class);
         bean.generate();
 
-        ArrayList<Model> objects = new ArrayList<>();
+        ArrayList<AbstractStrategy> objects = new ArrayList<>();
         new JavaClassModel("com.zyy.pojo", "mapper");
 
         DataMap dataMap = new DataMap();

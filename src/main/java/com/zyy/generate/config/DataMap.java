@@ -1,7 +1,7 @@
 package com.zyy.generate.config;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zyy.generate.core.Model;
+import com.zyy.generate.core.AbstractStrategy;
 import lombok.Data;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class DataMap {
      */
     private List<String> tableList;
 
-    private List<Model> modelList;
+    private List<AbstractStrategy> modelList;
 
     /**
      * 组
