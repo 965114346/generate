@@ -1,9 +1,10 @@
 package com.zyy.generate.core;
 
 import com.zyy.generate.dao.GenerateMapper;
+import freemarker.template.Configuration;
+import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 观察者模式
@@ -11,35 +12,44 @@ import java.util.List;
  */
 public class GeneratorProxy implements GeneratorSubject {
 
-    private final List<Generator> generatorList = new ArrayList<>();
+    @Setter
+    private Configuration configuration;
 
+    @Setter
     private GenerateMapper generateMapper;
 
-    private final String[] list;
+    private final List<Generator> generatorMap = new ArrayList<>();
 
-    public GeneratorProxy(String... tableName) {
-        this.list = tableName;
+    private String[] tableNames;
+
+    public GeneratorProxy(String... tableNames) {
+        this.tableNames = tableNames;
     }
 
-    public void setGenerateMapper(GenerateMapper generateMapper) {
-        this.generateMapper = generateMapper;
-    }
-
-    @Override
-    public void registerGenerator(Generator generator) {
-        generatorList.add(generator);
+    public void setTableNames(String... tableNames) {
+        this.tableNames = tableNames;
     }
 
     @Override
-    public void registerAllGenerator(List<Generator> registerList) {
-        generatorList.addAll(registerList);
+    public void registerGenerator(AbstractGenerator generator) {
+        generator.setGenerateMapper(generateMapper);
+        generator.setConfiguration(configuration);
+        generatorMap.add(generator);
+    }
+
+    @Override
+    public void registerAllGenerator(List<AbstractGenerator> registerList) {
+        for (AbstractGenerator generator : registerList) {
+            generator.setGenerateMapper(generateMapper);
+            generator.setConfiguration(configuration);
+        }
+        generatorMap.addAll(registerList);
     }
 
     @Override
     public void notifyGenerators() {
-        for (Generator generator : generatorList) {
-            GeneratorAdapter generatorAdapter = new GeneratorAdapter(generateMapper, generator);
-            generatorAdapter.adapter(list);
-        }
+        generatorMap.forEach(item -> {
+            item.gen(tableNames);
+        });
     }
 }

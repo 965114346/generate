@@ -1,5 +1,6 @@
 package com.zyy.generate.pojo;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 
 import java.util.List;
@@ -116,5 +117,25 @@ public class Table {
      */
     private String comment;
 
-    private List<Column> columnList;
+
+    //(自定义)数据  table_name
+    /**
+     * 驼峰名称 tableName
+     */
+    private String humpName;
+
+    /**
+     * 大写驼峰名称 TableName
+     */
+    private String upperCaseHumpName;
+
+    /**
+     * 大写名称 TABLE_NAME
+     */
+    private String upperCaseName;
+
+    /**
+     * 无下划线大写名称 TABLENAME
+     */
+    private String noUnderlineUpperCaseName;
 }

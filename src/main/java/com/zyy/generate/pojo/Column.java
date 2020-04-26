@@ -1,5 +1,6 @@
 package com.zyy.generate.pojo;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 
 /**
@@ -12,21 +13,6 @@ public class Column {
      * 列名
      */
     private String name;
-
-    /**
-     * 驼峰名称
-     */
-    private String humpName;
-
-    /**
-     * 大写名称
-     */
-    private String upperCaseName;
-
-    /**
-     * 无下划线大写名称
-     */
-    private String noUnderlineUpperCaseName;
 
     /**
      * 表限定符
@@ -146,4 +132,31 @@ public class Column {
      * 组合字段的公式
      */
     private String generationExpressic;
+
+
+    //(自定义)数据  column_name varchar
+    /**
+     * 驼峰名称 columnName
+     */
+    private String humpName;
+
+    /**
+     * 装换的字段类型 string
+     */
+    private String convertType;
+
+    /**
+     * 大写驼峰名称 ColumnName string
+     */
+    private String upperCaseHumpName;
+
+    /**
+     * 大写名称 COLUMN_NAME
+     */
+    private String upperCaseName;
+
+    /**
+     * 无下划线大写名称 COLUMNNAME
+     */
+    private String noUnderlineUpperCaseName;
 }

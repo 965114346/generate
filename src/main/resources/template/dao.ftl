@@ -1,55 +1,55 @@
-package ${daoGenerate@packagePath};
+package ${dao.path};
 
-import ${beanGenerate@packagePath}.${beanGenerate@name};
+import ${bean.path}.${dao.table.upperCaseHumpName};
 
 import java.util.List;
 
-<#if tableComment??>
+<#if dao.table.comment??>
 /**
-* ${tableComment}
+* ${dao.table.comment}
 */
 </#if>
-public interface ${daoGenerate@name} {
+public interface ${dao.table.upperCaseHumpName}Dao {
 
     /**
-    * 根据id查询${tableComment}
+    * 根据id查询${dao.table.comment}
     * @param id
     * @return
     */
-    ${beanGenerate@name} selectByPrimaryKey(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.classSimpleName}</#if></#list> id);
+    ${dao.table.upperCaseHumpName} selectByPrimaryKey(<#list dao.columnList as beanField><#if beanField.columnKey == "PRI">${beanField.convertType}</#if></#list> id);
 
     /**
-    * 条件查询${tableComment}列表
-    * @param ${beanVar}
+    * 条件查询${dao.table.comment}列表
+    * @param ${dao.table.humpName}
     * @return
     */
-    List<${beanGenerate@name}> selectByCondition(${beanGenerate@name} ${beanVar});
+    List<${dao.table.upperCaseHumpName}> selectByCondition(${dao.table.upperCaseHumpName} ${dao.table.humpName});
 
     /**
-    * 插入${tableComment}
-    * @param ${beanVar}
+    * 插入${dao.table.comment}
+    * @param ${dao.table.humpName}
     * @return
     */
-    Integer insertSelective(${beanGenerate@name} ${beanVar});
+    boolean insertSelective(${dao.table.upperCaseHumpName} ${dao.table.humpName});
 
     /**
-    * 更新${tableComment}
-    * @param ${beanVar}
+    * 更新${dao.table.comment}
+    * @param ${dao.table.humpName}
     * @return
     */
-    Integer updateByPrimaryKey(${beanGenerate@name} ${beanVar});
+    boolean updateByPrimaryKey(${dao.table.upperCaseHumpName} ${dao.table.humpName});
 
     /**
-    * 根据id删除${tableComment}
+    * 根据id删除${dao.table.comment}
     * @param id
     * @return
     */
-    Integer deleteByPrimaryKey(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.classSimpleName}</#if></#list> id);
+    boolean deleteByPrimaryKey(<#list dao.columnList as beanField><#if beanField.columnKey == "PRI">${beanField.convertType}</#if></#list> id);
 
     /**
-    * 根据id批量删除${tableComment}
+    * 根据id批量删除${dao.table.comment}
     * @param ids
     * @return
     */
-    Integer batchDeleteByPrimaryKey(List<<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.classSimpleName}</#if></#list>> ids);
+    Integer batchDeleteByPrimaryKey(List<<#list dao.columnList as beanField><#if beanField.columnKey == "PRI">${beanField.convertType}</#if></#list>> ids);
 }

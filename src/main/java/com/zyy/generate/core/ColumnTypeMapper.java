@@ -1,7 +1,5 @@
 package com.zyy.generate.core;
 
-import java.util.Map;
-
 /**
  * @author yangyang
  */

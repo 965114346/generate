@@ -1,4 +1,4 @@
-package ${beanGenerate@packagePath};
+package ${bean.path};
 
 import java.util.Date;
 
@@ -6,17 +6,17 @@ import lombok.Data;
 
 /**
  * @author ${author}
- * ${beanGenerate@name}
+ * ${bean.table.upperCaseHumpName}
  */
 @Data
-public class ${beanGenerate@name} {
-    <#list columnList as column>
+public class ${bean.table.upperCaseHumpName} {
+    <#list bean.columnList as column>
 
-    <#if column.columnComment??>
+    <#if column.comment??>
     /**
-     * ${column.columnComment}
+     * ${column.comment}
      */
     </#if>
-    private ${column.classSimpleName} ${column.name};
+    private ${column.convertType} ${column.humpName};
     </#list>
 }
