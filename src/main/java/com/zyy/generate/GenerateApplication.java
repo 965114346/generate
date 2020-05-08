@@ -51,9 +51,9 @@ public class GenerateApplication {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(GenerateApplication.class);
         GeneratorProxy proxy = applicationContext.getBean(GeneratorProxy.class);
 
-        AbstractGenerator generator = new JavaGenerator("bean", "com.zyy.entity", "bean.ftl", "java", null, null);
+        AbstractGenerator generator = new JavaGenerator("bean", "com.zyy.entity", "bean.ftl", null, null);
 
-        AbstractGenerator daoGenerator = new JavaGenerator("dao", "com.zyy.dao", "dao.ftl", "java", "Dao", null);
+        AbstractGenerator daoGenerator = new JavaGenerator("dao", "com.zyy.dao", "dao.ftl", "Dao", null);
 
         proxy.registerGenerator(generator);
         proxy.registerGenerator(daoGenerator);

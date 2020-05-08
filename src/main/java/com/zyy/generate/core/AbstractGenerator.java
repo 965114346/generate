@@ -7,6 +7,7 @@ import com.zyy.generate.pojo.Table;
 import com.zyy.generate.util.GeneratorUtils;
 import com.zyy.generate.util.StrUtils;
 import freemarker.template.Configuration;
+import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -69,7 +70,7 @@ public abstract class AbstractGenerator implements Generator {
             DATA_MAP.put(name, data);
             log.info("name = {}", name);
             log.info("val = {}", data);
-            GeneratorUtils.generate(configuration, templateName, DATA_MAP, StringUtils.join(preString, table.getUpperCaseHumpName(), subString), path, type);
+            GeneratorUtils.generate(configuration, templateName, DATA_MAP, StringUtils.join(preString, table.getUpperCaseHumpName(), subString), path, getType());
         }
     }
 
@@ -91,6 +92,7 @@ public abstract class AbstractGenerator implements Generator {
     /**
      * 类型
      */
+    @Getter
     protected String type;
 
     /**
