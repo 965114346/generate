@@ -1,15 +1,22 @@
 package ${beanGenerate@packagePath};
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 import java.util.Date;
 
-import lombok.Data;
-
 /**
+<#if tableComment??>
+ * ${tableComment}
+ *
+</#if>
  * @author ${author}
- * ${beanGenerate@name}
+ * @date ${.now}
  */
 @Data
-public class ${beanGenerate@name} {
+@Accessors(chain = true)
+public class ${beanGenerate@name} implements Serializable {
     <#list columnList as column>
 
     <#if column.columnComment??>

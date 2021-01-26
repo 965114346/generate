@@ -1,9 +1,9 @@
 package com.zyy.generate.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.zyy.generate.config.BeanConfig;
 import org.apache.commons.lang3.StringUtils;
@@ -48,18 +48,14 @@ public class StrUtils {
     }
 
     public static String getPackagePath(String name, BeanConfig beanConfig) {
-        List<String> list = Arrays.asList(beanConfig.getBasePackage(), name, beanConfig.getModelName())
-                .stream()
+        List<String> list = Stream.of(beanConfig.getBasePackage(), name, beanConfig.getModelName())
                 .filter(StringUtils::isNotBlank)
                 .collect(Collectors.toList());
 
         return StringUtils.join(list, ".");
     }
 
-    public static void main(String args[]) {
-        int x = 4;
-        System.out.println(x>4 ? 99.9:9);
-        String t_blog = str2hump("t_blog");
-        System.out.println(t_blog);
+    public static void main(String[] args) {
+        System.out.println(str2hump("t_blog"));
     }
 }

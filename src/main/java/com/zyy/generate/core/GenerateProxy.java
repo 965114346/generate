@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -52,9 +53,11 @@ public class GenerateProxy {
             log.info("======================>> tableComment: {}", tableComment);
             log.info("======================>> columnList  : {}", columnList);
 
-            // 截取第一个下划线后的字符串   adv_picture  <--  rcg_adv_picture
-            String entity = StringUtils.substringAfter(tableName, "_");
-            //String entity = tableName;
+            String entity = tableName;
+            if (beanConfig.getIgnoreTableFirstWord()) {
+                // 截取第一个下划线后的字符串   adv_picture  <--  rcg_adv_picture
+                entity = StringUtils.substringAfter(tableName, "_");
+            }
             // advPicture  <--  adv_picture
             String beanVar = StrUtils.str2hump(entity);
             // 类名驼峰命名  AdvPicture  <-- adv_picture
@@ -144,9 +147,10 @@ public class GenerateProxy {
     private static Map<String, Class<?>> columnMapping = new HashMap<>();
 
     static {
-        columnMapping.put("int", Integer.class);
-        columnMapping.put("bigint", Long.class);
+        columnMapping.put("int", Long.class);
+        columnMapping.put("bigint", BigInteger.class);
         columnMapping.put("tinyint", Integer.class);
+        columnMapping.put("smallint", Integer.class);
         columnMapping.put("double", Double.class);
         columnMapping.put("float", Float.class);
         columnMapping.put("decimal", BigDecimal.class);

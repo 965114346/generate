@@ -4,11 +4,14 @@ import ${beanGenerate@packagePath}.${beanGenerate@name};
 
 import java.util.List;
 
-<#if tableComment??>
 /**
-* ${tableComment}
-*/
+<#if tableComment??>
+ * ${tableComment}
+ *
 </#if>
+ * @author ${author}
+ * @date ${.now}
+ */
 public interface ${daoGenerate@name} {
 
     /**
@@ -30,26 +33,26 @@ public interface ${daoGenerate@name} {
     * @param ${beanVar}
     * @return
     */
-    Integer insertSelective(${beanGenerate@name} ${beanVar});
+    boolean insertSelective(${beanGenerate@name} ${beanVar});
 
     /**
     * 更新${tableComment}
     * @param ${beanVar}
     * @return
     */
-    Integer updateByPrimaryKey(${beanGenerate@name} ${beanVar});
+    boolean updateByPrimaryKey(${beanGenerate@name} ${beanVar});
 
     /**
     * 根据id删除${tableComment}
     * @param id
     * @return
     */
-    Integer deleteByPrimaryKey(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.classSimpleName}</#if></#list> id);
+    boolean deleteByPrimaryKey(<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.classSimpleName}</#if></#list> id);
 
     /**
     * 根据id批量删除${tableComment}
     * @param ids
     * @return
     */
-    Integer batchDeleteByPrimaryKey(List<<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.classSimpleName}</#if></#list>> ids);
+    boolean batchDeleteByPrimaryKey(List<<#list columnList as beanField><#if beanField.columnKey == "PRI">${beanField.classSimpleName}</#if></#list>> ids);
 }

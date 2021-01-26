@@ -22,6 +22,11 @@ public class BeanConfig {
     private String modelName;
 
     /**
+     * 忽略前缀
+     */
+    private Boolean ignoreTableFirstWord;
+
+    /**
      * 基础包名称
      */
     private String basePackage;
